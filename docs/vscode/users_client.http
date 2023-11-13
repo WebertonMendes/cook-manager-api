@@ -15,13 +15,19 @@ Content-Type: {{contentType}}
 ###
 
 # @name find_user_by_id
-GET {{baseURL}}/users/9da3a8e9-49f7-4e20-b6f2-24baeb085919
+GET {{baseURL}}/users/:user_id
 Content-Type: {{contentType}}
 
 ###
 
 # @name find_all_users
 GET {{baseURL}}/users
+Content-Type: {{contentType}}
+
+###
+
+# @name delete_user_by_id
+DELETE {{baseURL}}/users/:user_id
 Content-Type: {{contentType}}
 
 ###
