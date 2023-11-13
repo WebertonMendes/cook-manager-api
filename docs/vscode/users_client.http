@@ -19,3 +19,9 @@ GET {{baseURL}}/users/9da3a8e9-49f7-4e20-b6f2-24baeb085919
 Content-Type: {{contentType}}
 
 ###
+
+# @name find_all_users
+GET {{baseURL}}/users
+Content-Type: {{contentType}}
+
+###
