@@ -1,0 +1,21 @@
+@baseURL = http://localhost:3333/api
+@contentType = application/json
+
+# @name create_user
+POST {{baseURL}}/users
+Content-Type: {{contentType}}
+
+{
+  "name": "Weberton Mendes",
+  "username": "WebertonMendes",
+  "avatarUrl": "https://github.com/WebertonMendes.png",
+  "password": "password@123"
+}
+
+###
+
+# @name find_user_by_id
+GET {{baseURL}}/users/9da3a8e9-49f7-4e20-b6f2-24baeb085919
+Content-Type: {{contentType}}
+
+###
