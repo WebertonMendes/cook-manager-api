@@ -47,4 +47,12 @@ export class PrismaUsersRepository implements UsersRepository {
       throw new IntegrationFailureException(error);
     }
   }
+
+  async deleteById(id: string): Promise<void> {
+    try {
+      await this.prisma.user.delete({ where: { id } });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
 }
