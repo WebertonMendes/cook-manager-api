@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  cook-manager-db:
+    container_name: cook-manager-db
+    image: postgres
+    environment:
+      - TZ=America/Sao_Paulo
+      - POSTGRES_DB=cook-manager-db
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 5433:5432
