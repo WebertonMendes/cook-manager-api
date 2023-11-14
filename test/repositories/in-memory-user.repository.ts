@@ -34,4 +34,8 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     this.items.push(user);
   }
+
+  async deleteById(id: string): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== id);
+  }
 }
