@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 
@@ -21,21 +21,45 @@ describe('Create user (E2E)', () => {
   });
 
   test('[POST] /users', async () => {
-    const response = await request(app.getHttpServer()).post('/users').send({
+    const userData = {
       name: 'John Doe',
       username: 'john.doe23',
       avatarUrl: 'http://mydomain.com/avatar1234.jpg',
       password: 'password@123',
-    });
+    };
 
-    expect(response.statusCode).toBe(201);
+    const response = await request(app.getHttpServer())
+      .post('/users')
+      .send(userData);
 
     const userOnDatabase = await prisma.user.findUnique({
       where: {
-        username: 'john.doe23',
+        username: userData.username,
       },
     });
 
+    expect(response.statusCode).toBe(HttpStatus.CREATED);
     expect(userOnDatabase).toBeTruthy();
+  });
+
+  test('[POST] /users thrown UserAlreadyExistsException', async () => {
+    const userData = {
+      name: 'John Doe',
+      username: 'john.doe23',
+      avatarUrl: 'http://mydomain.com/avatar1234.jpg',
+      password: 'password@123',
+    };
+
+    await request(app.getHttpServer()).post('/users').send(userData);
+
+    const response = await request(app.getHttpServer())
+      .post('/users')
+      .send(userData);
+
+    expect(response.statusCode).toBe(HttpStatus.CONFLICT);
+    expect(response.body.statusCode).toEqual(HttpStatus.CONFLICT);
+    expect(response.body.message).toEqual(
+      `User '${userData.username}' already exists.`,
+    );
   });
 });
