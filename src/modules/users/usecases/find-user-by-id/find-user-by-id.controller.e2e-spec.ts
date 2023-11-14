@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 
@@ -29,8 +29,20 @@ describe('Find user by ID (E2E)', () => {
       .get(`/users/${user.id}`)
       .send();
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(HttpStatus.OK);
     expect(response.body).toHaveProperty('id');
     expect(response.body.id).toEqual(user.id);
+  });
+
+  test('[GET] /users/:id thrown not found', async () => {
+    const userId = 'fakeUserId';
+
+    const response = await request(app.getHttpServer())
+      .get(`/users/${userId}`)
+      .send();
+
+    expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
+    expect(response.body.statusCode).toEqual(HttpStatus.NOT_FOUND);
+    expect(response.body.message).toEqual(`User '${userId}' not found.`);
   });
 });
