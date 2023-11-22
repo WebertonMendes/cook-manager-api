@@ -10,6 +10,8 @@ import { FindAllUsersController } from './usecases/find-all-users/find-all-users
 import { FindAllUsersUseCase } from './usecases/find-all-users/find-all-users.usecase';
 import { FindUserByIdController } from './usecases/find-user-by-id/find-user-by-id.controller';
 import { FindUserByIdUseCase } from './usecases/find-user-by-id/find-user-by-id.usecase';
+import { UpdateUserController } from './usecases/update-user/update-user.controller';
+import { UpdateUserUseCase } from './usecases/update-user/update-user.usecase';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { FindUserByIdUseCase } from './usecases/find-user-by-id/find-user-by-id.
     CreateUsersController,
     FindUserByIdController,
     FindAllUsersController,
+    UpdateUserController,
     DeleteUserController,
   ],
   providers: [
     CreateUserUseCase,
     FindUserByIdUseCase,
     FindAllUsersUseCase,
+    UpdateUserUseCase,
     DeleteUserUseCase,
   ],
 })

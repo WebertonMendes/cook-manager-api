@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
+import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
 import { UserResponseDto } from '@/modules/users/dto/user-response.dto';
 import { UsersFilterOptionsDto } from '@/modules/users/dto/users-filter-options.dto';
 import { UsersRepository } from '@/modules/users/repositories/users.repository';
@@ -43,6 +44,14 @@ export class PrismaUsersRepository implements UsersRepository {
   async createUser(data: CreateUserDto): Promise<void> {
     try {
       await this.prisma.user.create({ data });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
+
+  async update(id: string, data: UpdateUserDto): Promise<void> {
+    try {
+      await this.prisma.user.update({ where: { id }, data });
     } catch (error) {
       throw new IntegrationFailureException(error);
     }
