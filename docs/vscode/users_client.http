@@ -26,6 +26,16 @@ Content-Type: {{contentType}}
 
 ###
 
+# @name update_user_by_id
+PATCH {{baseURL}}/users/:user_id
+Content-Type: {{contentType}}
+
+{
+  "isActive": false
+}
+
+###
+
 # @name delete_user_by_id
 DELETE {{baseURL}}/users/:user_id
 Content-Type: {{contentType}}
