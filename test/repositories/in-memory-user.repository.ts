@@ -2,6 +2,7 @@ import { UsersRepository } from '@/modules/users/repositories/users.repository';
 import { CreateUserDto } from '../../src/modules/users/dto/create-user.dto';
 import { UserResponseDto } from '../../src/modules/users/dto/user-response.dto';
 import { UserEntity } from '../../src/modules/users/entities/user.entity';
+import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
 
 export class InMemoryUsersRepository implements UsersRepository {
   public items: UserEntity[] = [];
@@ -33,6 +34,16 @@ export class InMemoryUsersRepository implements UsersRepository {
     });
 
     this.items.push(user);
+  }
+
+  async update(id: string, data: UpdateUserDto): Promise<void> {
+    const user = this.items.filter((user) => user.id === id)[0];
+
+    Object.keys(data).map((dataKey) => {
+      Object.keys(user).map((userKey) => {
+        if (userKey === dataKey) user[userKey] = data[dataKey];
+      });
+    });
   }
 
   async deleteById(id: string): Promise<void> {
