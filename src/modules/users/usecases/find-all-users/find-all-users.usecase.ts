@@ -1,14 +1,29 @@
 import { Injectable } from '@nestjs/common';
 
+import { handlerPagination } from '@/infra/helpers/pagination/utils/handlerPagination';
+import { ListUsersOptionsDto } from '../../dto/list-users-options.dto';
+import { ListUsersResponseDto } from '../../dto/list-users-response.dto';
 import { UsersRepository } from '../../repositories/users.repository';
-import { UsersFilterOptionsDto } from '../../dto/users-filter-options.dto';
-import { UserResponseDto } from '../../dto/user-response.dto';
+import { handleUserFilters } from '../../utils/handleUserFilters';
 
 @Injectable()
 export class FindAllUsersUseCase {
   constructor(private userRepository: UsersRepository) {}
 
-  async execute(filters: UsersFilterOptionsDto): Promise<UserResponseDto[]> {
-    return await this.userRepository.findAll(filters);
+  async execute(options: ListUsersOptionsDto): Promise<ListUsersResponseDto> {
+    const filters = handleUserFilters({
+      name: options.name,
+      username: options.username,
+      role: options.role,
+      isActive: options.isActive,
+    });
+
+    const pagination = handlerPagination({
+      take: options.take,
+      order: options.order,
+      page: options.page,
+    });
+
+    return await this.userRepository.findAll(filters, pagination);
   }
 }

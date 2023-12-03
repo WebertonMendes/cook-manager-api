@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
+import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
+import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
+import { ListUsersResponseDto } from '@/modules/users/dto/list-users-response.dto';
 import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
 import { UserResponseDto } from '@/modules/users/dto/user-response.dto';
 import { UsersFilterOptionsDto } from '@/modules/users/dto/users-filter-options.dto';
@@ -13,12 +16,37 @@ import { PrismaService } from '../prisma.service';
 export class PrismaUsersRepository implements UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(filters: UsersFilterOptionsDto): Promise<UserResponseDto[]> {
-    console.log(filters);
+  async findAll(
+    filters: UsersFilterOptionsDto,
+    pagination: PaginationOptionsDTO,
+  ): Promise<ListUsersResponseDto> {
+    const users = await this.prisma.user.findMany({
+      where: {
+        name: {
+          contains: filters.name,
+          mode: 'insensitive',
+        },
+        username: {
+          contains: filters.username,
+          mode: 'insensitive',
+        },
+        role: filters.role,
+        isActive: filters.isActive,
+      },
+      take: pagination.take,
+      skip: pagination.skip,
+    });
 
-    const listUsers = await this.prisma.user.findMany();
+    const totalUsers = await this.prisma.user.count();
 
-    return listUsers.map((user) => PrismaUserMapper.toDto(user));
+    const paginationMeta = new PaginationMetaDTO({
+      pageOptionsDTO: pagination,
+      itemCount: totalUsers,
+    });
+
+    const usersResponse = users.map((user) => PrismaUserMapper.toDto(user));
+
+    return PrismaUserMapper.toDtoPaginated(usersResponse, paginationMeta);
   }
 
   async findById(id: string): Promise<UserResponseDto | null> {
