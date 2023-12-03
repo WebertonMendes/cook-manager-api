@@ -37,7 +37,8 @@ export class PrismaUsersRepository implements UsersRepository {
       skip: pagination.skip,
     });
 
-    const totalUsers = await this.prisma.user.count();
+    const totalUsers =
+      users.length > 0 ? users.length : await this.prisma.user.count();
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,
