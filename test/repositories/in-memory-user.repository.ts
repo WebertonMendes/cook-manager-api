@@ -1,11 +1,40 @@
+import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
+import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
+import { ListUsersResponseDto } from '@/modules/users/dto/list-users-response.dto';
+import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
+import { UsersFilterOptionsDto } from '@/modules/users/dto/users-filter-options.dto';
 import { UsersRepository } from '@/modules/users/repositories/users.repository';
 import { CreateUserDto } from '../../src/modules/users/dto/create-user.dto';
 import { UserResponseDto } from '../../src/modules/users/dto/user-response.dto';
 import { UserEntity } from '../../src/modules/users/entities/user.entity';
-import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
 
 export class InMemoryUsersRepository implements UsersRepository {
   public items: UserEntity[] = [];
+
+  async findAll(
+    filters: UsersFilterOptionsDto,
+    pagination: PaginationOptionsDTO,
+  ): Promise<ListUsersResponseDto> {
+    const users = this.items.filter(
+      (user) =>
+        user.name.includes(filters.name) ||
+        user.username.includes(filters.username) ||
+        user.role.includes(filters.role) ||
+        user.isActive === filters.isActive,
+    );
+
+    const allUsers = this.items.slice(0, pagination.take);
+
+    const paginationMeta = new PaginationMetaDTO({
+      pageOptionsDTO: pagination,
+      itemCount: users.length > 0 ? users.length : this.items.length,
+    });
+
+    return {
+      data: users.length > 0 ? users : allUsers,
+      pagination: paginationMeta,
+    };
+  }
 
   async findById(id: string): Promise<UserResponseDto> {
     const user = this.items.find((item) => item.id === id);

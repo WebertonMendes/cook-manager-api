@@ -4,15 +4,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { UserEntity } from '@/modules/users/entities/user.entity';
 
-export function makeUser(override: Partial<UserEntity> = {}) {
-  return new UserEntity({
-    name: faker.person.fullName(),
-    username: faker.internet.userName(),
-    password: faker.internet.password(),
-    ...override,
-  });
-}
-
 @Injectable()
 export class UserFactory {
   constructor(private prisma: PrismaService) {}
@@ -26,4 +17,13 @@ export class UserFactory {
 
     return user;
   }
+}
+
+function makeUser(override: Partial<UserEntity> = {}) {
+  return new UserEntity({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    password: faker.internet.password(),
+    ...override,
+  });
 }
