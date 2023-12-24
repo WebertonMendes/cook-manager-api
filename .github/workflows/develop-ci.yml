@@ -1,0 +1,29 @@
+name: Develop CI
+
+on:
+  push:
+    branches: [ "development" ]
+  pull_request:
+    branches: [ "development" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+
+      - name: Run install dependencies
+        run: npm install
+
+      - name: Run build application
+        run: npm run build
+
+      - name: Run unit Tests
+        run: npm run test
+
+      - name: Run E2E Tests
+        run: npm run test:e2e
