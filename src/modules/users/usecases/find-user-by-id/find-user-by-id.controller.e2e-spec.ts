@@ -34,7 +34,7 @@ describe('Find user by ID (E2E)', () => {
     expect(response.body.id).toEqual(user.id);
   });
 
-  test('[GET] /users/:id thrown not found', async () => {
+  test('[GET] /users/:id throw not found', async () => {
     const userId = 'fakeUserId';
 
     const response = await request(app.getHttpServer())

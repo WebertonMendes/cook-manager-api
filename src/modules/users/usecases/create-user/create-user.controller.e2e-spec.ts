@@ -42,7 +42,7 @@ describe('Create user (E2E)', () => {
     expect(userOnDatabase).toBeTruthy();
   });
 
-  test('[POST] /users thrown UserAlreadyExistsException', async () => {
+  test('[POST] /users throw UserAlreadyExistsException', async () => {
     const userData = {
       name: 'John Doe',
       username: 'john.doe23',
