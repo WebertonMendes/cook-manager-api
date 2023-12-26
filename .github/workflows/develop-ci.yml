@@ -5,6 +5,8 @@ on:
     branches: [ "development" ]
   pull_request:
     branches: [ "development" ]
+env:
+  DATABASE_URL: "postgresql://postgres:docker@localhost:5432/cook-manager-db?schema=public"
 
 jobs:
   test:
@@ -21,6 +23,12 @@ jobs:
 
       - name: Run build application
         run: npm run build
+
+      - name: Start PostgreSQL Database
+        run: docker-compose up -d
+
+      - name: Start migration
+        run: npx prisma migrate dev
 
       - name: Run unit Tests
         run: npm run test
