@@ -11,6 +11,8 @@ import { UsersRepository } from '@/modules/users/repositories/users.repository';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
 import { PrismaService } from '../prisma.service';
+import { Order } from '@/infra/helpers/pagination/constants/order.constants';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
@@ -32,6 +34,12 @@ export class PrismaUsersRepository implements UsersRepository {
         },
         role: filters.role,
         isActive: filters.isActive,
+      },
+      orderBy: {
+        name:
+          pagination.order && pagination.order === Order.DESC
+            ? Prisma.SortOrder.desc
+            : Prisma.SortOrder.asc,
       },
       take: pagination.take,
       skip: pagination.skip,
