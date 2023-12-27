@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
+import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
@@ -11,8 +13,6 @@ import { UsersRepository } from '@/modules/users/repositories/users.repository';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
 import { PrismaService } from '../prisma.service';
-import { Order } from '@/infra/helpers/pagination/constants/order.constants';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
