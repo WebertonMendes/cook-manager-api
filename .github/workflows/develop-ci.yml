@@ -43,7 +43,7 @@ jobs:
       - name: Run unit Tests
         run: npm run test
 
-      - name: Run Coverage Tests
+      - name: Run Coverage unit Tests
         run: npm run test:cov
 
       - name: Run E2E Tests
