@@ -42,7 +42,7 @@ describe('Delete user by ID (E2E)', () => {
     expect(userOnDatabase).toBeNull();
   });
 
-  test('[DELETE] /users/:id thrown not found', async () => {
+  test('[DELETE] /users/:id throw not found', async () => {
     const userId = 'fakeUserId';
 
     const response = await request(app.getHttpServer())

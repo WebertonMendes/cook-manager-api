@@ -43,5 +43,11 @@ jobs:
       - name: Run unit Tests
         run: npm run test
 
+      - name: Run Coverage unit Tests
+        run: npm run test:cov
+
       - name: Run E2E Tests
         run: npm run test:e2e
+      
+      - name: Run Coverage E2E Tests
+        run: npm run test:e2e:cov

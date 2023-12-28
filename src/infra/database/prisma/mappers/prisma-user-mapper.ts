@@ -1,7 +1,8 @@
+import { User as PrismaUser } from '@prisma/client';
+
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { ListUsersResponseDto } from '@/modules/users/dto/list-users-response.dto';
 import { UserResponseDto } from '@/modules/users/dto/user-response.dto';
-import { User as PrismaUser } from '@prisma/client';
 
 export class PrismaUserMapper {
   static toDto(raw: PrismaUser): UserResponseDto {

@@ -8,7 +8,7 @@ import { handleUserFilters } from '../../utils/handleUserFilters';
 
 @Injectable()
 export class FindAllUsersUseCase {
-  constructor(private userRepository: UsersRepository) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute(options: ListUsersOptionsDto): Promise<ListUsersResponseDto> {
     const filters = handleUserFilters({
@@ -24,6 +24,6 @@ export class FindAllUsersUseCase {
       page: options.page,
     });
 
-    return await this.userRepository.findAll(filters, pagination);
+    return await this.usersRepository.findAll(filters, pagination);
   }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
+import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
@@ -32,6 +34,12 @@ export class PrismaUsersRepository implements UsersRepository {
         },
         role: filters.role,
         isActive: filters.isActive,
+      },
+      orderBy: {
+        name:
+          pagination.order && pagination.order === Order.DESC
+            ? Prisma.SortOrder.desc
+            : Prisma.SortOrder.asc,
       },
       take: pagination.take,
       skip: pagination.skip,

@@ -43,7 +43,7 @@ describe('Update user by ID (E2E)', () => {
     expect(userOnDatabase.isActive).toEqual(false);
   });
 
-  test('[PATCH] /users/:id thrown not found', async () => {
+  test('[PATCH] /users/:id throw not found', async () => {
     const userId = 'fakeUserId';
 
     const response = await request(app.getHttpServer())

@@ -5,10 +5,10 @@ import { UpdateUserUseCase } from './update-user.usecase';
 
 @Controller('users')
 export class UpdateUserController {
-  constructor(private readonly updateUserUseCase: UpdateUserUseCase) {}
+  constructor(private readonly updateUser: UpdateUserUseCase) {}
 
   @Patch(':id')
   async handle(@Param('id') id: string, @Body() data: UpdateUserDto) {
-    await this.updateUserUseCase.execute(id, data);
+    await this.updateUser.execute(id, data);
   }
 }

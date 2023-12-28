@@ -4,10 +4,10 @@ import { FindUserByIdUseCase } from './find-user-by-id.usecase';
 
 @Controller('users')
 export class FindUserByIdController {
-  constructor(private readonly findUserByIdUseCase: FindUserByIdUseCase) {}
+  constructor(private readonly findUserById: FindUserByIdUseCase) {}
 
   @Get(':id')
   async handle(@Param('id') id: string) {
-    return await this.findUserByIdUseCase.execute(id);
+    return await this.findUserById.execute(id);
   }
 }

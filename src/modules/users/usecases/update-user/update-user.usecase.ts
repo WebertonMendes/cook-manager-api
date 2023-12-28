@@ -6,13 +6,13 @@ import { UpdateUserDto } from '../../dto/update-user.dto';
 
 @Injectable()
 export class UpdateUserUseCase {
-  constructor(private userRepository: UsersRepository) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute(id: string, data: UpdateUserDto): Promise<void> {
-    const user = await this.userRepository.findById(id);
+    const user = await this.usersRepository.findById(id);
 
     if (!user) throw new UserNotFoundException(id);
 
-    await this.userRepository.update(id, data);
+    await this.usersRepository.update(id, data);
   }
 }

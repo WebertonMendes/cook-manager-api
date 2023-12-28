@@ -1,6 +1,5 @@
 import { $Enums, User } from '@prisma/client';
 import { randomUUID } from 'crypto';
-// import { randomUUID } from 'crypto';
 
 export class UserEntity implements User {
   id: string;
