@@ -38,4 +38,12 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
       throw new IntegrationFailureException(error);
     }
   }
+
+  async deleteById(id: string): Promise<void> {
+    try {
+      await this.prisma.category.delete({ where: { id } });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
 }
