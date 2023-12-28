@@ -7,6 +7,8 @@ import { DeleteCategoryController } from './usecases/delete-category/delete-cate
 import { DeleteCategoryUseCase } from './usecases/delete-category/delete-category.usecase';
 import { FindUserByIdController } from './usecases/find-category-by-id/find-category-by-id.controller';
 import { FindCategoryByIdUseCase } from './usecases/find-category-by-id/find-category-by-id.usecase';
+import { UpdateCategoryController } from './usecases/update-category/update-category.controller';
+import { UpdateCategoryUseCase } from './usecases/update-category/update-category.usecase';
 
 @Module({
   imports: [DatabaseModule],
@@ -14,11 +16,13 @@ import { FindCategoryByIdUseCase } from './usecases/find-category-by-id/find-cat
     CreateCategoryController,
     DeleteCategoryController,
     FindUserByIdController,
+    UpdateCategoryController,
   ],
   providers: [
     CreateCategoryUseCase,
     DeleteCategoryUseCase,
     FindCategoryByIdUseCase,
+    UpdateCategoryUseCase,
   ],
 })
 export class CategoriesModule {}

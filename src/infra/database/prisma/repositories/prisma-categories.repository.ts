@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { CategoryResponseDto } from '@/modules/categories/dto/category-response.dto';
 import { CreateCategoryDto } from '@/modules/categories/dto/create-category.dto';
+import { UpdateCategoryDto } from '@/modules/categories/dto/update-category.dto';
 import { CategoriesRepository } from '@/modules/categories/repositories/categories.repository';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
 import { PrismaCategoryMapper } from '../mappers/prisma-categories-mapper';
@@ -34,6 +35,14 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
   async createCategory(data: CreateCategoryDto): Promise<void> {
     try {
       await this.prisma.category.create({ data });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
+
+  async update(id: string, data: UpdateCategoryDto): Promise<void> {
+    try {
+      await this.prisma.category.update({ where: { id }, data });
     } catch (error) {
       throw new IntegrationFailureException(error);
     }
