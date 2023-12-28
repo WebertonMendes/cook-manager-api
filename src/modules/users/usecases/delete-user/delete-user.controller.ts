@@ -4,10 +4,10 @@ import { DeleteUserUseCase } from './delete-user.usecase';
 
 @Controller('users')
 export class DeleteUserController {
-  constructor(private readonly deleteUserUseCase: DeleteUserUseCase) {}
+  constructor(private readonly deleteUser: DeleteUserUseCase) {}
 
   @Delete(':id')
   async handle(@Param('id') id: string) {
-    return await this.deleteUserUseCase.execute(id);
+    return await this.deleteUser.execute(id);
   }
 }

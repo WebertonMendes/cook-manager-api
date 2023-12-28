@@ -5,10 +5,10 @@ import { ListUsersOptionsDto } from '../../dto/list-users-options.dto';
 
 @Controller('users')
 export class FindAllUsersController {
-  constructor(private readonly findAllUsersUseCase: FindAllUsersUseCase) {}
+  constructor(private readonly findAllUsers: FindAllUsersUseCase) {}
 
   @Get()
   async handle(@Query() options: ListUsersOptionsDto) {
-    return await this.findAllUsersUseCase.execute(options);
+    return await this.findAllUsers.execute(options);
   }
 }

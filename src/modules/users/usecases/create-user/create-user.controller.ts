@@ -5,10 +5,10 @@ import { CreateUserUseCase } from './create-user.usecase';
 
 @Controller('users')
 export class CreateUsersController {
-  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
+  constructor(private readonly createUser: CreateUserUseCase) {}
 
   @Post()
   async handle(@Body() user: CreateUserDto) {
-    await this.createUserUseCase.execute(user);
+    await this.createUser.execute(user);
   }
 }
