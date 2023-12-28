@@ -21,6 +21,16 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
     return PrismaCategoryMapper.toDto(category);
   }
 
+  async findById(id: string): Promise<CategoryResponseDto | null> {
+    const category = await this.prisma.category.findUnique({
+      where: { id },
+    });
+
+    if (!category) return null;
+
+    return PrismaCategoryMapper.toDto(category);
+  }
+
   async createCategory(data: CreateCategoryDto): Promise<void> {
     try {
       await this.prisma.category.create({ data });
