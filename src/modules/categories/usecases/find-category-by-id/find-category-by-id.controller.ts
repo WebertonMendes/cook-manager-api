@@ -3,7 +3,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { FindCategoryByIdUseCase } from './find-category-by-id.usecase';
 
 @Controller('categories')
-export class FindUserByIdController {
+export class FindCategoryByIdController {
   constructor(private readonly findCategoryById: FindCategoryByIdUseCase) {}
 
   @Get(':id')
