@@ -1,11 +1,38 @@
+import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
+import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
+import { CategoriesFilterOptionsDto } from '@/modules/categories/dto/categories-filter-options.dto';
 import { CategoryResponseDto } from '@/modules/categories/dto/category-response.dto';
 import { CreateCategoryDto } from '@/modules/categories/dto/create-category.dto';
+import { ListCategoriesResponseDto } from '@/modules/categories/dto/list-categories-response.dto';
 import { UpdateCategoryDto } from '@/modules/categories/dto/update-category.dto';
 import { CategoryEntity } from '@/modules/categories/entities/category.entity';
 import { CategoriesRepository } from '@/modules/categories/repositories/categories.repository';
 
 export class InMemoryCategoriesRepository implements CategoriesRepository {
   public items: CategoryEntity[] = [];
+
+  async findAll(
+    filters: CategoriesFilterOptionsDto,
+    pagination: PaginationOptionsDTO,
+  ): Promise<ListCategoriesResponseDto> {
+    const users = this.items.filter(
+      (category) =>
+        category.name.includes(filters.name) ||
+        category.isActive === filters.isActive,
+    );
+
+    const allUsers = this.items.slice(0, pagination.take);
+
+    const paginationMeta = new PaginationMetaDTO({
+      pageOptionsDTO: pagination,
+      itemCount: users.length > 0 ? users.length : this.items.length,
+    });
+
+    return {
+      data: users.length > 0 ? users : allUsers,
+      pagination: paginationMeta,
+    };
+  }
 
   async findByName(name: string): Promise<CategoryResponseDto | null> {
     const category = this.items.find((item) => item.name === name);

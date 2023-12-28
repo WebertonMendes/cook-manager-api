@@ -23,7 +23,7 @@ export class CategoryFactory {
 
 function makeCategory(override: Partial<CategoryEntity> = {}) {
   return new CategoryEntity({
-    name: faker.commerce.department(),
+    name: faker.internet.userAgent(),
     ...override,
   });
 }
