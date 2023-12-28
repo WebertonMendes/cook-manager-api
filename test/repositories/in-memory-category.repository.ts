@@ -30,4 +30,8 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
 
     this.items.push(category);
   }
+
+  async deleteById(id: string): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== id);
+  }
 }
