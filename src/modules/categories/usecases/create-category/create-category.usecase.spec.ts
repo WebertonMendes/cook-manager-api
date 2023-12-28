@@ -6,7 +6,7 @@ let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
 
 let createCategory: CreateCategoryUseCase;
 
-describe('Create User', () => {
+describe('Create Category', () => {
   beforeEach(() => {
     inMemoryCategoriesRepository = new InMemoryCategoriesRepository();
     createCategory = new CreateCategoryUseCase(inMemoryCategoriesRepository);
