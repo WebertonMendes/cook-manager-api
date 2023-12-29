@@ -12,7 +12,7 @@ export abstract class UsersRepository {
   ): Promise<ListUsersResponseDto>;
   abstract findById(id: string): Promise<UserResponseDto | null>;
   abstract findByUsername(username: string): Promise<UserResponseDto | null>;
-  abstract createUser(data: CreateUserDto): Promise<void>;
+  abstract create(data: CreateUserDto): Promise<void>;
   abstract update(id: string, data: UpdateUserDto): Promise<void>;
-  abstract deleteById(id: string): Promise<void>;
+  abstract delete(id: string): Promise<void>;
 }

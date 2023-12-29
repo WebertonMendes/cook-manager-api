@@ -78,7 +78,7 @@ export class PrismaUsersRepository implements UsersRepository {
     return PrismaUserMapper.toDto(user);
   }
 
-  async createUser(data: CreateUserDto): Promise<void> {
+  async create(data: CreateUserDto): Promise<void> {
     try {
       await this.prisma.user.create({ data });
     } catch (error) {
@@ -94,7 +94,7 @@ export class PrismaUsersRepository implements UsersRepository {
     }
   }
 
-  async deleteById(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
       await this.prisma.user.delete({ where: { id } });
     } catch (error) {

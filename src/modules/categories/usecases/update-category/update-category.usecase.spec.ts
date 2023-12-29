@@ -16,7 +16,7 @@ describe('Update Category', () => {
       name: 'Drinks',
     };
 
-    await inMemoryCategoriesRepository.createCategory(newCategory);
+    await inMemoryCategoriesRepository.create(newCategory);
 
     const savedCategory = await inMemoryCategoriesRepository.findByName(
       newCategory.name,

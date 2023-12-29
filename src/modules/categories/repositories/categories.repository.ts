@@ -12,7 +12,7 @@ export abstract class CategoriesRepository {
   ): Promise<ListCategoriesResponseDto>;
   abstract findByName(name: string): Promise<CategoryResponseDto | null>;
   abstract findById(id: string): Promise<CategoryResponseDto | null>;
-  abstract createCategory(data: CreateCategoryDto): Promise<void>;
+  abstract create(data: CreateCategoryDto): Promise<void>;
   abstract update(id: string, data: UpdateCategoryDto): Promise<void>;
-  abstract deleteById(id: string): Promise<void>;
+  abstract delete(id: string): Promise<void>;
 }

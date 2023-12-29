@@ -60,29 +60,29 @@ async function mockListCategories() {
     name: 'Category 1',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category1);
+  await inMemoryCategoriesRepository.create(category1);
 
   const category2 = {
     name: 'Category 2',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category2);
+  await inMemoryCategoriesRepository.create(category2);
 
   const category3 = {
     name: 'Category 3',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category3);
+  await inMemoryCategoriesRepository.create(category3);
 
   const category4 = {
     name: 'Category 4',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category4);
+  await inMemoryCategoriesRepository.create(category4);
 
   const category5 = {
     name: 'Category 5',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category5);
+  await inMemoryCategoriesRepository.create(category5);
 }

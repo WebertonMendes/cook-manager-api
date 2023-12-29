@@ -50,7 +50,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     return category;
   }
 
-  async createCategory(data: CreateCategoryDto): Promise<void> {
+  async create(data: CreateCategoryDto): Promise<void> {
     const category = new CategoryEntity({
       name: data.name,
       isActive: data.isActive,
@@ -69,7 +69,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     });
   }
 
-  async deleteById(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     this.items = this.items.filter((item) => item.id !== id);
   }
 }

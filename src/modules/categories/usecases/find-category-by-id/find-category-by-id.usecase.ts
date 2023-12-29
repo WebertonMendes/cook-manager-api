@@ -6,10 +6,10 @@ import { CategoryNotFoundException } from '../../exceptions/category-not-found-e
 
 @Injectable()
 export class FindCategoryByIdUseCase {
-  constructor(private categoriesRepository: CategoriesRepository) {}
+  constructor(private repository: CategoriesRepository) {}
 
   async execute(id: string): Promise<CategoryResponseDto> {
-    const category = await this.categoriesRepository.findById(id);
+    const category = await this.repository.findById(id);
 
     if (!category) throw new CategoryNotFoundException(id);
 

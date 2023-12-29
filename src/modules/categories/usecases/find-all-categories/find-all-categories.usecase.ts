@@ -8,7 +8,7 @@ import { handleCategoriesFilters } from '../../utils/handleCategoryFilters';
 
 @Injectable()
 export class FindAllCategoriesUseCase {
-  constructor(private categoriesRepository: CategoriesRepository) {}
+  constructor(private repository: CategoriesRepository) {}
 
   async execute(
     options: ListCategoriesOptionsDto,
@@ -24,6 +24,6 @@ export class FindAllCategoriesUseCase {
       page: options.page,
     });
 
-    return await this.categoriesRepository.findAll(filters, pagination);
+    return await this.repository.findAll(filters, pagination);
   }
 }

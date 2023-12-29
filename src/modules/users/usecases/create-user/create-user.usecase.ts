@@ -8,12 +8,12 @@ import { UsersRepository } from '../../repositories/users.repository';
 @Injectable()
 export class CreateUserUseCase {
   constructor(
-    private usersRepository: UsersRepository,
+    private repository: UsersRepository,
     private hashGenerator: HashGenerator,
   ) {}
 
   async execute(user: CreateUserDto): Promise<void> {
-    const userWithSameUsername = await this.usersRepository.findByUsername(
+    const userWithSameUsername = await this.repository.findByUsername(
       user.username,
     );
 
@@ -30,6 +30,6 @@ export class CreateUserUseCase {
       password: hashedPassword,
     };
 
-    await this.usersRepository.createUser(userData);
+    await this.repository.create(userData);
   }
 }

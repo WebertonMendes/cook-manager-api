@@ -80,7 +80,7 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
     return PrismaCategoryMapper.toDto(category);
   }
 
-  async createCategory(data: CreateCategoryDto): Promise<void> {
+  async create(data: CreateCategoryDto): Promise<void> {
     try {
       await this.prisma.category.create({ data });
     } catch (error) {
@@ -96,7 +96,7 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
     }
   }
 
-  async deleteById(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
       await this.prisma.category.delete({ where: { id } });
     } catch (error) {
