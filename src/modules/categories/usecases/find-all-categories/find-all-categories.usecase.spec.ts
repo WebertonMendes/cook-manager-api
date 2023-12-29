@@ -3,12 +3,12 @@ import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-catego
 import { FindAllCategoriesUseCase } from './find-all-categories.usecase';
 
 let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
-let findAllCategoriesUseCase: FindAllCategoriesUseCase;
+let findAllCategories: FindAllCategoriesUseCase;
 
 describe('Find All Categories', () => {
   beforeEach(() => {
     inMemoryCategoriesRepository = new InMemoryCategoriesRepository();
-    findAllCategoriesUseCase = new FindAllCategoriesUseCase(
+    findAllCategories = new FindAllCategoriesUseCase(
       inMemoryCategoriesRepository,
     );
   });
@@ -22,7 +22,7 @@ describe('Find All Categories', () => {
       page: 1,
     };
 
-    const result = await findAllCategoriesUseCase.execute(queryParams);
+    const result = await findAllCategories.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
@@ -43,7 +43,7 @@ describe('Find All Categories', () => {
       page: 1,
     };
 
-    const result = await findAllCategoriesUseCase.execute(queryParams);
+    const result = await findAllCategories.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);

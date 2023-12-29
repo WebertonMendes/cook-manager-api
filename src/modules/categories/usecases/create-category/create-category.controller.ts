@@ -5,10 +5,10 @@ import { CreateCategoryUseCase } from './create-category.usecase';
 
 @Controller('categories')
 export class CreateCategoryController {
-  constructor(private readonly createCategoryUseCase: CreateCategoryUseCase) {}
+  constructor(private readonly createCategory: CreateCategoryUseCase) {}
 
   @Post()
   async handle(@Body() category: CreateCategoryDto) {
-    await this.createCategoryUseCase.execute(category);
+    await this.createCategory.execute(category);
   }
 }

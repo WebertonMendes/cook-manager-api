@@ -4,12 +4,12 @@ import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { UserRole } from '@prisma/client';
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
-let findAllUsersUseCase: FindAllUsersUseCase;
+let findAllUsers: FindAllUsersUseCase;
 
 describe('Find All Users', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
-    findAllUsersUseCase = new FindAllUsersUseCase(inMemoryUsersRepository);
+    findAllUsers = new FindAllUsersUseCase(inMemoryUsersRepository);
   });
 
   it('should be able list all users paginated without filters', async () => {
@@ -21,7 +21,7 @@ describe('Find All Users', () => {
       page: 1,
     };
 
-    const result = await findAllUsersUseCase.execute(queryParams);
+    const result = await findAllUsers.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
@@ -42,7 +42,7 @@ describe('Find All Users', () => {
       page: 1,
     };
 
-    const result = await findAllUsersUseCase.execute(queryParams);
+    const result = await findAllUsers.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
