@@ -16,7 +16,7 @@ export class ProductEntity implements Product {
     this.id = product.id ? product.id : randomUUID();
     this.name = product?.name;
     this.description = product?.description;
-    this.price = product?.price;
+    this.price = new Prisma.Decimal(product?.price);
     this.imageUrl = product?.imageUrl;
     this.categoryId = product?.categoryId;
     this.isActive = product?.isActive ?? true;
