@@ -8,6 +8,7 @@ import { ProductsFilterOptionsDto } from '@/modules/products/dto/products-filter
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { ListProductsResponseDto } from '@/modules/products/dto/list-products-response.dto';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
+import { UpdateProductDto } from '@/modules/products/dto/update-product.dto';
 
 export class InMemoryProductsRepository implements ProductsRepository {
   public items: ProductEntity[] = [];
@@ -54,5 +55,15 @@ export class InMemoryProductsRepository implements ProductsRepository {
     });
 
     this.items.push(product);
+  }
+
+  async update(id: string, data: UpdateProductDto): Promise<void> {
+    const product = this.items.filter((product) => product.id === id)[0];
+
+    Object.keys(data).map((dataKey) => {
+      Object.keys(product).map((productKey) => {
+        if (productKey === dataKey) product[productKey] = data[dataKey];
+      });
+    });
   }
 }
