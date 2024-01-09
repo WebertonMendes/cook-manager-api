@@ -5,6 +5,7 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { CategoryEntity } from '@/modules/categories/entities/category.entity';
 import { ProductEntity } from '@/modules/products/entities/product.entity';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class ProductFactory {
@@ -29,7 +30,7 @@ export class ProductFactory {
 
 async function makeProduct(override: Partial<ProductEntity> = {}) {
   const category = new CategoryEntity({
-    name: faker.commerce.department(),
+    name: `${faker.commerce.department()}-${randomUUID()}`,
   });
 
   return {
