@@ -1,6 +1,6 @@
 import { CategoriesFilterOptionsDto } from '../dto/categories-filter-options.dto';
 
-export function handleCategoriesFilters(
+export function handleCategoryFilters(
   filterOptions: CategoriesFilterOptionsDto,
 ): CategoriesFilterOptionsDto {
   return Object.entries(filterOptions)

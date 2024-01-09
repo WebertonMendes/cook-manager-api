@@ -11,7 +11,7 @@ import { ListCategoriesResponseDto } from '@/modules/categories/dto/list-categor
 import { UpdateCategoryDto } from '@/modules/categories/dto/update-category.dto';
 import { CategoriesRepository } from '@/modules/categories/repositories/categories.repository';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
-import { PrismaCategoryMapper } from '../mappers/prisma-categories-mapper';
+import { PrismaCategoryMapper } from '../mappers/prisma-category-mapper';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()

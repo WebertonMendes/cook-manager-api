@@ -4,7 +4,7 @@ import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-me
 import { ListProductsResponseDto } from '@/modules/products/dto/list-products-response.dto';
 import { ProductResponseDto } from '@/modules/products/dto/product-response.dto';
 
-export class PrismaProductsMapper {
+export class PrismaProductMapper {
   static toDto(raw: PrismaProduct): ProductResponseDto {
     return {
       id: raw.id,
