@@ -7,6 +7,7 @@ import { CreateProductDto } from '@/modules/products/dto/create-product.dto';
 import { ListProductsResponseDto } from '@/modules/products/dto/list-products-response.dto';
 import { ProductResponseDto } from '@/modules/products/dto/product-response.dto';
 import { ProductsFilterOptionsDto } from '@/modules/products/dto/products-filter-options.dto';
+import { UpdateProductDto } from '@/modules/products/dto/update-product.dto';
 import { ProductsRepository } from '@/modules/products/repositories/products.repository';
 import { Prisma } from '@prisma/client';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
@@ -68,6 +69,14 @@ export class PrismaProductsRepository implements ProductsRepository {
   async create(data: CreateProductDto): Promise<void> {
     try {
       await this.prisma.product.create({ data });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
+
+  async update(id: string, data: UpdateProductDto): Promise<void> {
+    try {
+      await this.prisma.product.update({ where: { id }, data });
     } catch (error) {
       throw new IntegrationFailureException(error);
     }
