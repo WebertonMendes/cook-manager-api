@@ -66,4 +66,13 @@ export class InMemoryProductsRepository implements ProductsRepository {
       });
     });
   }
+
+  async inactivate(id: string): Promise<void> {
+    const product = this.items.filter((product) => product.id === id)[0];
+    const inactiveProductsCategoryId = '50228d88-a780-4982-b844-c95c405cc290';
+
+    product.categoryId = inactiveProductsCategoryId;
+    product.imageUrl = null;
+    product.isActive = false;
+  }
 }
