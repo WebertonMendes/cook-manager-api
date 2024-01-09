@@ -5,13 +5,13 @@ import { CategoriesRepository } from '../../repositories/categories.repository';
 
 @Injectable()
 export class DeleteCategoryUseCase {
-  constructor(private categoriesRepository: CategoriesRepository) {}
+  constructor(private repository: CategoriesRepository) {}
 
   async execute(id: string): Promise<void> {
-    const user = await this.categoriesRepository.findById(id);
+    const user = await this.repository.findById(id);
 
     if (!user) throw new CategoryNotFoundException(id);
 
-    await this.categoriesRepository.deleteById(id);
+    await this.repository.delete(id);
   }
 }

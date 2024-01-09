@@ -11,7 +11,7 @@ import { ListCategoriesResponseDto } from '@/modules/categories/dto/list-categor
 import { UpdateCategoryDto } from '@/modules/categories/dto/update-category.dto';
 import { CategoriesRepository } from '@/modules/categories/repositories/categories.repository';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
-import { PrismaCategoryMapper } from '../mappers/prisma-categories-mapper';
+import { PrismaCategoryMapper } from '../mappers/prisma-category-mapper';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
@@ -80,7 +80,7 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
     return PrismaCategoryMapper.toDto(category);
   }
 
-  async createCategory(data: CreateCategoryDto): Promise<void> {
+  async create(data: CreateCategoryDto): Promise<void> {
     try {
       await this.prisma.category.create({ data });
     } catch (error) {
@@ -96,7 +96,7 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
     }
   }
 
-  async deleteById(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
       await this.prisma.category.delete({ where: { id } });
     } catch (error) {

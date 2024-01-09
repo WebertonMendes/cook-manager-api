@@ -52,7 +52,7 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user;
   }
 
-  async createUser(data: CreateUserDto): Promise<void> {
+  async create(data: CreateUserDto): Promise<void> {
     const user = new UserEntity({
       name: data.name,
       username: data.username,
@@ -75,7 +75,7 @@ export class InMemoryUsersRepository implements UsersRepository {
     });
   }
 
-  async deleteById(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     this.items = this.items.filter((item) => item.id !== id);
   }
 }

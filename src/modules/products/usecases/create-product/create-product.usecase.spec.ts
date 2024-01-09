@@ -1,0 +1,63 @@
+import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
+import { InMemoryProductsRepository } from 'test/repositories/in-memory-product.repository';
+import { CreateProductUseCase } from './create-product.usecase';
+import { CategoryNotFoundException } from '@/modules/categories/exceptions/category-not-found-exception';
+
+let inMemoryProductsRepository: InMemoryProductsRepository;
+let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
+
+let createProduct: CreateProductUseCase;
+
+describe('Create Product', () => {
+  beforeEach(() => {
+    inMemoryCategoriesRepository = new InMemoryCategoriesRepository();
+    inMemoryProductsRepository = new InMemoryProductsRepository();
+
+    createProduct = new CreateProductUseCase(
+      inMemoryProductsRepository,
+      inMemoryCategoriesRepository,
+    );
+  });
+
+  it('should be able to create a new product', async () => {
+    await inMemoryCategoriesRepository.create({
+      name: 'Drinks',
+    });
+
+    const savedCategory =
+      await inMemoryCategoriesRepository.findByName('Drinks');
+
+    const product = {
+      name: 'Product Name',
+      description: 'Product Description',
+      price: 10.99,
+      imageUrl: 'https://mysite.com/images/product001.png',
+      categoryId: savedCategory.id,
+    };
+
+    await createProduct.execute(product);
+
+    const savedProduct = inMemoryProductsRepository.items[0];
+
+    expect(savedProduct.name).toEqual(product.name);
+    expect(savedProduct).toHaveProperty('id');
+  });
+
+  it('should be able to throw a CategoryNotFoundException if the category id not exists.', async () => {
+    const product = {
+      name: 'Product Name',
+      description: 'Product Description',
+      price: 10.99,
+      imageUrl: 'https://mysite.com/images/product001.png',
+      categoryId: 'fake-category-id',
+    };
+
+    try {
+      await createProduct.execute(product);
+    } catch (error) {
+      expect(() => {
+        throw new CategoryNotFoundException(product.categoryId);
+      }).toThrow(CategoryNotFoundException);
+    }
+  });
+});

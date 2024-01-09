@@ -36,5 +36,23 @@ model Category {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
+  Product Product[]
+
   @@map("categories")
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal   @db.Decimal(10, 2)
+  imageUrl    String?   @default("https://placehold.co/200") @map("image_url")
+  categoryId  String    @map("category_id")
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("products")
 }

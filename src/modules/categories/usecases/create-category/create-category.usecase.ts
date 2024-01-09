@@ -6,10 +6,10 @@ import { CategoriesRepository } from '../../repositories/categories.repository';
 
 @Injectable()
 export class CreateCategoryUseCase {
-  constructor(private categoriesRepository: CategoriesRepository) {}
+  constructor(private repository: CategoriesRepository) {}
 
   async execute(category: CreateCategoryDto): Promise<void> {
-    const categoryWithSameName = await this.categoriesRepository.findByName(
+    const categoryWithSameName = await this.repository.findByName(
       category.name,
     );
 
@@ -17,6 +17,6 @@ export class CreateCategoryUseCase {
       throw new CategoryAlreadyExistsException(category.name);
     }
 
-    await this.categoriesRepository.createCategory(category);
+    await this.repository.create(category);
   }
 }

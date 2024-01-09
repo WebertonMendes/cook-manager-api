@@ -15,21 +15,21 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     filters: CategoriesFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListCategoriesResponseDto> {
-    const users = this.items.filter(
+    const categories = this.items.filter(
       (category) =>
         category.name.includes(filters.name) ||
         category.isActive === filters.isActive,
     );
 
-    const allUsers = this.items.slice(0, pagination.take);
+    const allCategories = this.items.slice(0, pagination.take);
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,
-      itemCount: users.length > 0 ? users.length : this.items.length,
+      itemCount: categories.length > 0 ? categories.length : this.items.length,
     });
 
     return {
-      data: users.length > 0 ? users : allUsers,
+      data: categories.length > 0 ? categories : allCategories,
       pagination: paginationMeta,
     };
   }
@@ -50,7 +50,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     return category;
   }
 
-  async createCategory(data: CreateCategoryDto): Promise<void> {
+  async create(data: CreateCategoryDto): Promise<void> {
     const category = new CategoryEntity({
       name: data.name,
       isActive: data.isActive,
@@ -69,7 +69,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     });
   }
 
-  async deleteById(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     this.items = this.items.filter((item) => item.id !== id);
   }
 }

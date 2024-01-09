@@ -6,13 +6,13 @@ import { CategoriesRepository } from '../../repositories/categories.repository';
 
 @Injectable()
 export class UpdateCategoryUseCase {
-  constructor(private categoriesRepository: CategoriesRepository) {}
+  constructor(private repository: CategoriesRepository) {}
 
   async execute(id: string, data: UpdateCategoryDto): Promise<void> {
-    const category = await this.categoriesRepository.findById(id);
+    const category = await this.repository.findById(id);
 
     if (!category) throw new CategoryNotFoundException(id);
 
-    await this.categoriesRepository.update(id, data);
+    await this.repository.update(id, data);
   }
 }

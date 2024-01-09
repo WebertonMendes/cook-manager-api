@@ -19,7 +19,7 @@ describe('Delete User', () => {
       password: 'password123',
     };
 
-    await inMemoryUsersRepository.createUser(newUser);
+    await inMemoryUsersRepository.create(newUser);
 
     const savedUser = await inMemoryUsersRepository.findByUsername(
       newUser.username,

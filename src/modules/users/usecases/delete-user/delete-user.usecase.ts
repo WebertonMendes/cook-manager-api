@@ -5,13 +5,13 @@ import { UsersRepository } from '../../repositories/users.repository';
 
 @Injectable()
 export class DeleteUserUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private repository: UsersRepository) {}
 
   async execute(id: string): Promise<void> {
-    const user = await this.usersRepository.findById(id);
+    const user = await this.repository.findById(id);
 
     if (!user) throw new UserNotFoundException(id);
 
-    await this.usersRepository.deleteById(id);
+    await this.repository.delete(id);
   }
 }

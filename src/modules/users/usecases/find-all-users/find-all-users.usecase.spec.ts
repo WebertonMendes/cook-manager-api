@@ -4,12 +4,12 @@ import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { UserRole } from '@prisma/client';
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
-let findAllUsersUseCase: FindAllUsersUseCase;
+let findAllUsers: FindAllUsersUseCase;
 
 describe('Find All Users', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
-    findAllUsersUseCase = new FindAllUsersUseCase(inMemoryUsersRepository);
+    findAllUsers = new FindAllUsersUseCase(inMemoryUsersRepository);
   });
 
   it('should be able list all users paginated without filters', async () => {
@@ -21,7 +21,7 @@ describe('Find All Users', () => {
       page: 1,
     };
 
-    const result = await findAllUsersUseCase.execute(queryParams);
+    const result = await findAllUsers.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
@@ -42,7 +42,7 @@ describe('Find All Users', () => {
       page: 1,
     };
 
-    const result = await findAllUsersUseCase.execute(queryParams);
+    const result = await findAllUsers.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
@@ -63,7 +63,7 @@ async function mockListUsers() {
     password: 'password123',
   };
 
-  await inMemoryUsersRepository.createUser(user1);
+  await inMemoryUsersRepository.create(user1);
 
   const user2 = {
     name: 'User 2',
@@ -73,7 +73,7 @@ async function mockListUsers() {
     password: 'password123',
   };
 
-  await inMemoryUsersRepository.createUser(user2);
+  await inMemoryUsersRepository.create(user2);
 
   const user3 = {
     name: 'User 3',
@@ -83,7 +83,7 @@ async function mockListUsers() {
     password: 'password123',
   };
 
-  await inMemoryUsersRepository.createUser(user3);
+  await inMemoryUsersRepository.create(user3);
 
   const user4 = {
     name: 'User 4',
@@ -93,7 +93,7 @@ async function mockListUsers() {
     password: 'password123',
   };
 
-  await inMemoryUsersRepository.createUser(user4);
+  await inMemoryUsersRepository.create(user4);
 
   const user5 = {
     name: 'User 5',
@@ -104,5 +104,5 @@ async function mockListUsers() {
     isActive: false,
   };
 
-  await inMemoryUsersRepository.createUser(user5);
+  await inMemoryUsersRepository.create(user5);
 }

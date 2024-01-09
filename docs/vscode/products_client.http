@@ -1,0 +1,44 @@
+@baseURL = http://localhost:3333/api
+@contentType = application/json
+
+# @name create_product
+POST {{baseURL}}/products
+Content-Type: {{contentType}}
+
+{
+  "name": "Luvas de Aço Pequena",
+  "description": "The Football Is Good For Training And Recreational Purposes",
+  "price": 19.99,
+  "imageUrl": "https://github.com/WebertonMendes.png",
+  "categoryId": "categoryId"
+}
+
+###
+
+# @name find_all_products
+GET {{baseURL}}/products
+Content-Type: {{contentType}}
+
+###
+
+# @name find_product_by_id
+GET {{baseURL}}/products/:product_id
+Content-Type: {{contentType}}
+
+###
+
+# @name update_product_by_id
+PATCH {{baseURL}}/products/:product_id
+Content-Type: {{contentType}}
+
+{
+  "isActive": false
+}
+
+###
+
+# @name delete/inactivate_product_by_id
+DELETE {{baseURL}}/products/:product_id
+Content-Type: {{contentType}}
+
+###

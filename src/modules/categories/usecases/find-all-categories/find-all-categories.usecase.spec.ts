@@ -3,12 +3,12 @@ import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-catego
 import { FindAllCategoriesUseCase } from './find-all-categories.usecase';
 
 let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
-let findAllCategoriesUseCase: FindAllCategoriesUseCase;
+let findAllCategories: FindAllCategoriesUseCase;
 
 describe('Find All Categories', () => {
   beforeEach(() => {
     inMemoryCategoriesRepository = new InMemoryCategoriesRepository();
-    findAllCategoriesUseCase = new FindAllCategoriesUseCase(
+    findAllCategories = new FindAllCategoriesUseCase(
       inMemoryCategoriesRepository,
     );
   });
@@ -22,7 +22,7 @@ describe('Find All Categories', () => {
       page: 1,
     };
 
-    const result = await findAllCategoriesUseCase.execute(queryParams);
+    const result = await findAllCategories.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
@@ -43,7 +43,7 @@ describe('Find All Categories', () => {
       page: 1,
     };
 
-    const result = await findAllCategoriesUseCase.execute(queryParams);
+    const result = await findAllCategories.execute(queryParams);
 
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
@@ -60,29 +60,29 @@ async function mockListCategories() {
     name: 'Category 1',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category1);
+  await inMemoryCategoriesRepository.create(category1);
 
   const category2 = {
     name: 'Category 2',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category2);
+  await inMemoryCategoriesRepository.create(category2);
 
   const category3 = {
     name: 'Category 3',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category3);
+  await inMemoryCategoriesRepository.create(category3);
 
   const category4 = {
     name: 'Category 4',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category4);
+  await inMemoryCategoriesRepository.create(category4);
 
   const category5 = {
     name: 'Category 5',
   };
 
-  await inMemoryCategoriesRepository.createCategory(category5);
+  await inMemoryCategoriesRepository.create(category5);
 }
