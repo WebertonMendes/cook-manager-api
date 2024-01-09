@@ -81,4 +81,21 @@ export class PrismaProductsRepository implements ProductsRepository {
       throw new IntegrationFailureException(error);
     }
   }
+
+  async inactivate(id: string): Promise<void> {
+    const inactiveProductsCategoryId = '50228d88-a780-4982-b844-c95c405cc290';
+
+    try {
+      await this.prisma.product.update({
+        where: { id },
+        data: {
+          imageUrl: null,
+          categoryId: inactiveProductsCategoryId,
+          isActive: false,
+        },
+      });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
 }
