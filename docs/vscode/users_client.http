@@ -14,14 +14,14 @@ Content-Type: {{contentType}}
 
 ###
 
-# @name find_user_by_id
-GET {{baseURL}}/users/:user_id
+# @name find_all_users
+GET {{baseURL}}/users
 Content-Type: {{contentType}}
 
 ###
 
-# @name find_all_users
-GET {{baseURL}}/users
+# @name find_user_by_id
+GET {{baseURL}}/users/:user_id
 Content-Type: {{contentType}}
 
 ###

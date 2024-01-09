@@ -1,0 +1,40 @@
+@baseURL = http://localhost:3333/api
+@contentType = application/json
+
+# @name create_category
+POST {{baseURL}}/categories
+Content-Type: {{contentType}}
+
+{
+  "name": "Drinks"
+}
+
+###
+
+# @name find_all_categories
+GET {{baseURL}}/categories
+Content-Type: {{contentType}}
+
+###
+
+# @name find_category_by_id
+GET {{baseURL}}/categories/:category_id
+Content-Type: {{contentType}}
+
+###
+
+# @name update_category_by_id
+PATCH {{baseURL}}/categories/:category_id
+Content-Type: {{contentType}}
+
+{
+  "isActive": false
+}
+
+###
+
+# @name delete_category_by_id
+DELETE {{baseURL}}/categories/:category_id
+Content-Type: {{contentType}}
+
+###
