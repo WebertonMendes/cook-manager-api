@@ -133,24 +133,16 @@ http://localhost:3333/api/docs
 
 ## 🤝 Colaboradores
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
+Atualmente às seguintes pessoas contribuem para este projeto:
 
 <table>
   <tr>
     <td align="center">
-      <a
-        href="https://github.com/WebertonMendes"
-        title="Wéberton Mendes"
-      >
-        <img
-          src="https://avatars3.githubusercontent.com/u/61299096"
-          alt="Foto do Weberton Mendes no GitHub"
-          width="100px;"
-          style="border-radius:50%;"
-        />
-        <br/>
-        <sub>Wéberton Mendes</sub>
+      <a href="https://github.com/WebertonMendes" title="Wéberton Mendes" target="_blank">
+        <img src="https://avatars3.githubusercontent.com/u/61299096" alt="Foto do Weberton Mendes no GitHub" width="60px;" style="border-radius:50%"/>
       </a>
+      <br/>
+      <sub>Wéberton Mendes</sub>
     </td>
   </tr>
 </table>
