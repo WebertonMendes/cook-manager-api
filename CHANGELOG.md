@@ -3,17 +3,8 @@
 Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato deste arquivo é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e o projeto segue o [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-<br /><br />
 
-## [1.3.0] - UNRELEASED
-
-### Added
-
-- Criação dos endpoints para gerenciamento de `PEDIDOS`:
-  - CREATE >> [POST] "/orders"
-  - LIST >> [GET] "/orders"
-  - FIND >> [GET] "/orders/:id"
-  - UPDATE >> [PATCH] "/orders/:id"
+<br/>
 
 ## [1.2.0] - 2024-01-09
 
