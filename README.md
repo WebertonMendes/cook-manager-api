@@ -135,8 +135,8 @@ http://localhost:3333/api/docs
 
 Atualmente às seguintes pessoas contribuem para este projeto:
 
-<a href="https://github.com/WebertonMendes" title="Wéberton Mendes" target="_blank">
-  <img src="https://avatars3.githubusercontent.com/u/61299096" alt="Foto do Weberton Mendes no GitHub" width="60px;" style="border-radius:50%"/>
+<a href="https://github.com/WebertonMendes/cook-manager-api/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=WebertonMendes/cook-manager-api" />
 </a>
 
 <br/>
