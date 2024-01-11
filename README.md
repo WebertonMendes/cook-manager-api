@@ -9,7 +9,7 @@
 
 > API (Backend) da aplicação de gerenciamento de bares e restaurantes.
 
-![App Version_PROD](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FWebertonMendes%2Fcook-manager-api%2Fmain%2Fpackage.json&query=version&style=for-the-badge&logo=nestjs&label=VERSION_PROD&color=157a8c)
+![App Version_PROD](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/WebertonMendes/cook-manager-api/main/package.json&query=version&style=for-the-badge&logo=nestjs&label=VERSION_PROD&color=157a8c)
 ![GitHub main commits](https://img.shields.io/github/commit-activity/t/WebertonMendes/cook-manager-api/main?style=for-the-badge&color=157a8c)
 ![App last commit](https://img.shields.io/github/last-commit/WebertonMendes/cook-manager-api/development?style=for-the-badge&color=157a8c)
 
