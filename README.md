@@ -11,11 +11,11 @@
 
 ![App Version_PROD](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FWebertonMendes%2Fcook-manager-api%2Fmain%2Fpackage.json&query=version&style=for-the-badge&logo=nestjs&label=VERSION_PROD&color=157a8c)
 ![GitHub main commits](https://img.shields.io/github/commit-activity/t/WebertonMendes/cook-manager-api/main?style=for-the-badge&color=157a8c)
-![App codecov](https://img.shields.io/codecov/c/github/WebertonMendes/cook-manager-api?style=for-the-badge&logo=codecov)
-
-![App Version_DEV](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FWebertonMendes%2Fcook-manager-api%2Fdevelopment%2Fpackage.json&query=version&style=for-the-badge&logo=nestjs&label=VERSION_DEV&color=157a8c)
-![App License](https://img.shields.io/github/license/WebertonMendes/cook-manager-api?style=for-the-badge&color=157a8c)
 ![App last commit](https://img.shields.io/github/last-commit/WebertonMendes/cook-manager-api/development?style=for-the-badge&color=157a8c)
+
+![App Version_DEV](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/WebertonMendes/cook-manager-api/development/package.json&query=version&style=for-the-badge&logo=nestjs&label=VERSION_DEV&color=157a8c)
+![App License](https://img.shields.io/github/license/WebertonMendes/cook-manager-api?style=for-the-badge&color=157a8c)
+![App codecov](https://img.shields.io/codecov/c/github/WebertonMendes/cook-manager-api?style=for-the-badge&logo=codecov)
 
 ## ☕ Sobre o projeto
 
