@@ -8,9 +8,9 @@ export class InactivateProductUseCase {
   constructor(private repository: ProductsRepository) {}
 
   async execute(id: string): Promise<void> {
-    const user = await this.repository.findById(id);
+    const product = await this.repository.findById(id);
 
-    if (!user) throw new ProductNotFoundException(id);
+    if (!product) throw new ProductNotFoundException(id);
 
     await this.repository.inactivate(id);
   }
