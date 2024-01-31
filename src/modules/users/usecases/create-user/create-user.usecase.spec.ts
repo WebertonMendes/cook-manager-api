@@ -1,5 +1,6 @@
-import { FakeHasher } from 'test/cryptography/fake-hasher';
+import { beforeEach, describe, expect, it } from 'vitest';
 
+import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
 import { UserAlreadyExistsException } from '../../exceptions/user-already-exists-exception';
 import { CreateUserUseCase } from './create-user.usecase';

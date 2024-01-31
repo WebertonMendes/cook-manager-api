@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { InMemoryProductsRepository } from 'test/repositories/in-memory-product.repository';
 import { ProductNotFoundException } from '../../exceptions/product-not-found-exception';
 import { InactivateProductUseCase } from './inactivate-product.usecase';

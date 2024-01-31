@@ -1,6 +1,8 @@
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
-import { FindCategoryByIdUseCase } from './find-category-by-id.usecase';
 import { CategoryNotFoundException } from '../../exceptions/category-not-found-exception';
+import { FindCategoryByIdUseCase } from './find-category-by-id.usecase';
 
 let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
 let findCategoryById: FindCategoryByIdUseCase;

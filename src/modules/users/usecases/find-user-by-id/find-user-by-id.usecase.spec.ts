@@ -1,6 +1,8 @@
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
-import { FindUserByIdUseCase } from './find-user-by-id.usecase';
 import { UserNotFoundException } from '../../exceptions/user-not-found-exception';
+import { FindUserByIdUseCase } from './find-user-by-id.usecase';
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let findUserById: FindUserByIdUseCase;

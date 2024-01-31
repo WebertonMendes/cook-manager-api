@@ -1,7 +1,9 @@
-import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
-import { FindAllUsersUseCase } from './find-all-users.usecase';
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { UserRole } from '@prisma/client';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
+import { FindAllUsersUseCase } from './find-all-users.usecase';
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let findAllUsers: FindAllUsersUseCase;

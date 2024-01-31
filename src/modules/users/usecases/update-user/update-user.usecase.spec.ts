@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
 import { UserNotFoundException } from '../../exceptions/user-not-found-exception';
 import { UpdateUserUseCase } from './update-user.usecase';

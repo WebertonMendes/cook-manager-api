@@ -1,7 +1,9 @@
+import { beforeEach, describe, expect, it } from 'vitest';
+
+import { CategoryNotFoundException } from '@/modules/categories/exceptions/category-not-found-exception';
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
 import { InMemoryProductsRepository } from 'test/repositories/in-memory-product.repository';
 import { CreateProductUseCase } from './create-product.usecase';
-import { CategoryNotFoundException } from '@/modules/categories/exceptions/category-not-found-exception';
 
 let inMemoryProductsRepository: InMemoryProductsRepository;
 let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
