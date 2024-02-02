@@ -7,7 +7,7 @@ import { UpdateCategoryUseCase } from './update-category.usecase';
 let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
 let updateCategory: UpdateCategoryUseCase;
 
-describe('Update Category', () => {
+describe('Update Category by ID', () => {
   beforeEach(() => {
     inMemoryCategoriesRepository = new InMemoryCategoriesRepository();
     updateCategory = new UpdateCategoryUseCase(inMemoryCategoriesRepository);
