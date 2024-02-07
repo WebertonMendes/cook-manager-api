@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { ProductNotFoundException } from '../../exceptions/product-not-found-exception';
 import { ProductsRepository } from '../../repositories/products.repository';
-import { OrderItemsRepository } from '@/modules/orders/order-items/repositories/order-items.repository';
+import { OrderItemsRepository } from '@/modules/items/repositories/order-items.repository';
 import { ProductCannotDeletedException } from '../../exceptions/product-cannot-deleted-exception';
 
 @Injectable()
