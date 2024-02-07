@@ -7,7 +7,7 @@ import { AddOrderItemUseCase } from './add-order-item.usecase';
 export class AddOrderItemController {
   constructor(private readonly addOrderItem: AddOrderItemUseCase) {}
 
-  @Post(':id/add-order-item')
+  @Post(':id/add-item')
   async handle(@Param('id') id: string, @Body() orderItem: AddOrderItemDto) {
     await this.addOrderItem.execute(id, orderItem);
   }
