@@ -83,16 +83,24 @@ export class PrismaProductsRepository implements ProductsRepository {
   }
 
   async inactivate(id: string): Promise<void> {
-    const inactiveProductsCategoryId = '50228d88-a780-4982-b844-c95c405cc290';
-
     try {
       await this.prisma.product.update({
         where: { id },
         data: {
           imageUrl: null,
-          categoryId: inactiveProductsCategoryId,
+          categoryId: process.env.INACTIVE_PRODUCTS_CATEGORY_ID,
           isActive: false,
         },
+      });
+    } catch (error) {
+      throw new IntegrationFailureException(error);
+    }
+  }
+
+  async delete(id: string): Promise<void> {
+    try {
+      await this.prisma.product.delete({
+        where: { id },
       });
     } catch (error) {
       throw new IntegrationFailureException(error);
