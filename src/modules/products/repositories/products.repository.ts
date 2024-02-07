@@ -14,4 +14,5 @@ export abstract class ProductsRepository {
   abstract create(data: CreateProductDto): Promise<void>;
   abstract update(id: string, data: UpdateProductDto): Promise<void>;
   abstract inactivate(id: string): Promise<void>;
+  abstract delete(id: string): Promise<void>;
 }

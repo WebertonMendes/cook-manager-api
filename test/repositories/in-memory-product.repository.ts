@@ -75,4 +75,8 @@ export class InMemoryProductsRepository implements ProductsRepository {
     product.imageUrl = null;
     product.isActive = false;
   }
+
+  async delete(id: string): Promise<void> {
+    this.items = this.items.filter((item) => item.id !== id);
+  }
 }
