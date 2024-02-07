@@ -1,4 +1,4 @@
-import { Controller, Delete, Param } from '@nestjs/common';
+import { Controller, Param, Put } from '@nestjs/common';
 
 import { InactivateProductUseCase } from './inactivate-product.usecase';
 
@@ -6,7 +6,7 @@ import { InactivateProductUseCase } from './inactivate-product.usecase';
 export class InactivateProductController {
   constructor(private readonly inactivateProduct: InactivateProductUseCase) {}
 
-  @Delete(':id')
+  @Put(':id/inactivate')
   async handle(@Param('id') id: string) {
     return await this.inactivateProduct.execute(id);
   }

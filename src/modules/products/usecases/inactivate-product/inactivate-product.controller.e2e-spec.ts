@@ -8,7 +8,7 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { ProductFactory } from 'test/factories/make-products';
 
-describe('Delete product by ID (E2E)', () => {
+describe('Inactive product by ID (E2E)', () => {
   let app: INestApplication;
   let productFactory: ProductFactory;
   let prisma: PrismaService;
@@ -26,7 +26,7 @@ describe('Delete product by ID (E2E)', () => {
     await app.init();
   });
 
-  test('[DELETE] /products/:id', async () => {
+  test('[PUT] /products/:id', async () => {
     await request(app.getHttpServer()).post('/categories').send({
       id: '50228d88-a780-4982-b844-c95c405cc290',
       name: 'Inactive Products',
@@ -41,7 +41,7 @@ describe('Delete product by ID (E2E)', () => {
     const product = await productFactory.makePrismaProduct();
 
     const response = await request(app.getHttpServer())
-      .delete(`/products/${product.id}`)
+      .put(`/products/${product.id}/inactivate`)
       .send();
 
     const productOnDatabase = await prisma.product.findUnique({
@@ -57,11 +57,11 @@ describe('Delete product by ID (E2E)', () => {
     expect(productOnDatabase.isActive).toEqual(false);
   });
 
-  test('[DELETE] /products/:id throw not found', async () => {
+  test('[PUT] /products/:id throw not found', async () => {
     const productId = 'fake-productId';
 
     const response = await request(app.getHttpServer())
-      .delete(`/products/${productId}`)
+      .put(`/products/${productId}/inactivate`)
       .send();
 
     expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);

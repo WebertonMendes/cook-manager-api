@@ -7,7 +7,7 @@ import { InactivateProductUseCase } from './inactivate-product.usecase';
 let inMemoryProductsRepository: InMemoryProductsRepository;
 let inactivateProduct: InactivateProductUseCase;
 
-describe('Delete Product', () => {
+describe('Inactive product by ID', () => {
   beforeEach(() => {
     inMemoryProductsRepository = new InMemoryProductsRepository();
     inactivateProduct = new InactivateProductUseCase(
