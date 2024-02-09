@@ -15,29 +15,25 @@ describe('Create Category', () => {
   });
 
   it('should be able to create a new category', async () => {
-    const category = {
-      name: 'Drinks',
-    };
+    const categoryName = 'Drinks';
 
-    await createCategory.execute(category);
+    await createCategory.execute({ name: categoryName });
 
     const savedCategory = inMemoryCategoriesRepository.items[0];
 
-    expect(savedCategory.name).toEqual(category.name);
+    expect(savedCategory.name).toEqual(categoryName);
     expect(savedCategory).toHaveProperty('id');
   });
 
   it('should be able to throw a CategoryAlreadyExistsException if the category name already exists.', async () => {
-    const category = {
-      name: 'Salads',
-    };
+    const categoryName = 'Salads';
 
     try {
-      await createCategory.execute(category);
-      await createCategory.execute(category);
+      await createCategory.execute({ name: categoryName });
+      await createCategory.execute({ name: categoryName });
     } catch (error) {
       expect(() => {
-        throw new CategoryAlreadyExistsException(category.name);
+        throw new CategoryAlreadyExistsException(categoryName);
       }).toThrow(CategoryAlreadyExistsException);
     }
   });

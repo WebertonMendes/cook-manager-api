@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { randomUUID } from 'crypto';
 
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
 import { CategoryNotFoundException } from '../../exceptions/category-not-found-exception';
@@ -14,15 +15,12 @@ describe('Delete Category', () => {
   });
 
   it('should be able to delete category by id', async () => {
-    const newCategory = {
-      name: 'Drinks',
-    };
+    const categoryName = 'Drinks';
 
-    await inMemoryCategoriesRepository.create(newCategory);
+    await inMemoryCategoriesRepository.create({ name: categoryName });
 
-    const savedCategory = await inMemoryCategoriesRepository.findByName(
-      newCategory.name,
-    );
+    const savedCategory =
+      await inMemoryCategoriesRepository.findByName(categoryName);
 
     await deleteCategory.execute(savedCategory.id);
 
@@ -32,13 +30,13 @@ describe('Delete Category', () => {
   });
 
   it('should be able to throw a CategoryNotFoundException if the category id not found.', async () => {
-    const fakeCategoryId = 'fake-categoryId';
+    const categoryId = randomUUID();
 
     try {
-      await deleteCategory.execute(fakeCategoryId);
+      await deleteCategory.execute(categoryId);
     } catch (error) {
       expect(() => {
-        throw new CategoryNotFoundException(fakeCategoryId);
+        throw new CategoryNotFoundException(categoryId);
       }).toThrow(CategoryNotFoundException);
     }
   });

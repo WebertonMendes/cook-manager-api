@@ -1,5 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
@@ -35,8 +36,8 @@ describe('Find category by ID (E2E)', () => {
     expect(response.body.id).toEqual(category.id);
   });
 
-  test('[GET] /categories/:id throw not found', async () => {
-    const categoryId = 'fakeCategoryId';
+  test('[GET] /categories/:id throw CategoryNotFoundException', async () => {
+    const categoryId = randomUUID();
 
     const response = await request(app.getHttpServer())
       .get(`/categories/${categoryId}`)

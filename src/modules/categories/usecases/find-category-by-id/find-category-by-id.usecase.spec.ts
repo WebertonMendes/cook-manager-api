@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
@@ -16,15 +17,12 @@ describe('Find category by ID', () => {
   });
 
   it('should be able to find category by id', async () => {
-    const newCategory = {
-      name: 'Drinks',
-    };
+    const categoryName = 'Drinks';
 
-    await inMemoryCategoriesRepository.create(newCategory);
+    await inMemoryCategoriesRepository.create({ name: categoryName });
 
-    const savedCategory = await inMemoryCategoriesRepository.findByName(
-      newCategory.name,
-    );
+    const savedCategory =
+      await inMemoryCategoriesRepository.findByName(categoryName);
 
     const category = await findCategoryById.execute(savedCategory.id);
 
@@ -34,13 +32,13 @@ describe('Find category by ID', () => {
   });
 
   it('should be able to throw a CategoryNotFoundException if the category id not found.', async () => {
-    const fakeCategoryId = 'fake-categoryId';
+    const categoryId = randomUUID();
 
     try {
-      await findCategoryById.execute(fakeCategoryId);
+      await findCategoryById.execute(categoryId);
     } catch (error) {
       expect(() => {
-        throw new CategoryNotFoundException(fakeCategoryId);
+        throw new CategoryNotFoundException(categoryId);
       }).toThrow(CategoryNotFoundException);
     }
   });

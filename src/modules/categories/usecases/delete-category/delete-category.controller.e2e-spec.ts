@@ -1,5 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
@@ -8,7 +9,7 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { CategoryFactory } from 'test/factories/make-categories';
 
-describe('Delete category by ID (E2E)', () => {
+describe('Delete category (E2E)', () => {
   let app: INestApplication;
   let categoryFactory: CategoryFactory;
   let prisma: PrismaService;
@@ -43,8 +44,8 @@ describe('Delete category by ID (E2E)', () => {
     expect(categoryOnDatabase).toBeNull();
   });
 
-  test('[DELETE] /categories/:id throw not found', async () => {
-    const categoryId = 'fake-categoryId';
+  test('[DELETE] /categories/:id throw CategoryNotFoundException', async () => {
+    const categoryId = randomUUID();
 
     const response = await request(app.getHttpServer())
       .delete(`/categories/${categoryId}`)

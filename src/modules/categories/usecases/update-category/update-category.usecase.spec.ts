@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
@@ -7,22 +8,19 @@ import { UpdateCategoryUseCase } from './update-category.usecase';
 let inMemoryCategoriesRepository: InMemoryCategoriesRepository;
 let updateCategory: UpdateCategoryUseCase;
 
-describe('Update Category by ID', () => {
+describe('Update Category', () => {
   beforeEach(() => {
     inMemoryCategoriesRepository = new InMemoryCategoriesRepository();
     updateCategory = new UpdateCategoryUseCase(inMemoryCategoriesRepository);
   });
 
   it('should be able to update category data by id', async () => {
-    const newCategory = {
-      name: 'Drinks',
-    };
+    const categoryName = 'Drinks';
 
-    await inMemoryCategoriesRepository.create(newCategory);
+    await inMemoryCategoriesRepository.create({ name: categoryName });
 
-    const savedCategory = await inMemoryCategoriesRepository.findByName(
-      newCategory.name,
-    );
+    const savedCategory =
+      await inMemoryCategoriesRepository.findByName(categoryName);
 
     expect(savedCategory.isActive).toEqual(true);
 
@@ -32,18 +30,17 @@ describe('Update Category by ID', () => {
     await updateCategory.execute(categoryId, data);
 
     expect(savedCategory.isActive).toEqual(data.isActive);
-    expect(savedCategory.name).toEqual(newCategory.name);
+    expect(savedCategory.name).toEqual(categoryName);
   });
 
   it('should be able to throw a CategoryNotFoundException if the category id not found.', async () => {
-    const fakeCategoryId = 'fake-categoryId';
-    const data = { isActive: false };
+    const categoryId = randomUUID();
 
     try {
-      await updateCategory.execute(fakeCategoryId, data);
+      await updateCategory.execute(categoryId, { isActive: false });
     } catch (error) {
       expect(() => {
-        throw new CategoryNotFoundException(fakeCategoryId);
+        throw new CategoryNotFoundException(categoryId);
       }).toThrow(CategoryNotFoundException);
     }
   });
