@@ -58,7 +58,7 @@ describe('Inactive product by ID (E2E)', () => {
     expect(productOnDatabase.isActive).toEqual(false);
   });
 
-  test('[PUT] /products/:id throw not found', async () => {
+  test('[PUT] /products/:id throw ProductNotFoundException', async () => {
     const productId = randomUUID();
 
     const response = await request(app.getHttpServer())

@@ -45,7 +45,7 @@ describe('Update product by ID (E2E)', () => {
     expect(productOnDatabase.isActive).toEqual(false);
   });
 
-  test('[PATCH] /products/:id throw not found', async () => {
+  test('[PATCH] /products/:id throw ProductNotFoundException', async () => {
     const productId = randomUUID();
 
     const response = await request(app.getHttpServer())

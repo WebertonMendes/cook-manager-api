@@ -36,7 +36,7 @@ describe('Find product by ID (E2E)', () => {
     expect(response.body.id).toEqual(product.id);
   });
 
-  test('[GET] /products/:id throw not found', async () => {
+  test('[GET] /products/:id throw ProductNotFoundException', async () => {
     const productId = randomUUID();
 
     const response = await request(app.getHttpServer())

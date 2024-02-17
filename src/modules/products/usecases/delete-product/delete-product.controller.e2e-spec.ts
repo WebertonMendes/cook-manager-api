@@ -44,7 +44,7 @@ describe('Delete product by ID (E2E)', () => {
     expect(productOnDatabase).toBeNull();
   });
 
-  test('[DELETE] /products/:id throw not found', async () => {
+  test('[DELETE] /products/:id throw ProductNotFoundException', async () => {
     const productId = randomUUID();
 
     const response = await request(app.getHttpServer())

@@ -45,7 +45,7 @@ describe('Update order by ID (E2E)', () => {
     expect(orderOnDatabase.isFinished).toEqual(true);
   });
 
-  test('[PATCH] /orders/:id throw not found', async () => {
+  test('[PATCH] /orders/:id throw OrderNotFoundException', async () => {
     const orderId = randomUUID();
 
     const response = await request(app.getHttpServer())
