@@ -1,23 +1,24 @@
 import { Injectable } from '@nestjs/common';
 
+import {
+  handleFormatFilters,
+  validateBooleanValue,
+} from '@/infra/helpers/filters/formatFilters';
 import { handlerPagination } from '@/infra/helpers/pagination/utils/handlerPagination';
 import { ListOrdersOptionsDto } from '../../dto/list-orders-options.dto';
 import { ListOrdersResponseDto } from '../../dto/list-orders-response.dto';
 import { OrdersRepository } from '../../repositories/orders.repository';
-import { handleOrderFilters } from '../../utils/handleOrderFilters';
 
 @Injectable()
 export class FindAllOrdersUseCase {
   constructor(private repository: OrdersRepository) {}
 
   async execute(options: ListOrdersOptionsDto): Promise<ListOrdersResponseDto> {
-    console.log('options: ', options);
-    const filters = handleOrderFilters({
+    const filters = handleFormatFilters({
       table: options.table,
       clientId: options.clientId,
-      isFinished: options.isFinished,
+      isFinished: validateBooleanValue(options.isFinished),
     });
-    console.log('filters: ', filters);
 
     const pagination = handlerPagination({
       take: options.take,
