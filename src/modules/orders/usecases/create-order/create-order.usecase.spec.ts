@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { UserNotFoundException } from '@/modules/users/exceptions/user-not-found-exception';
@@ -71,7 +72,7 @@ describe('Create Order', () => {
     const order = {
       table: 18,
       clientId: 120,
-      userId: 'fake-user-id',
+      userId: randomUUID(),
     };
 
     try {
