@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { randomUUID } from 'crypto';
 
 import { CategoryNotFoundException } from '@/modules/categories/exceptions/category-not-found-exception';
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
@@ -51,7 +52,7 @@ describe('Create Product', () => {
       description: 'Product Description',
       price: 10.99,
       imageUrl: 'https://mysite.com/images/product001.png',
-      categoryId: 'fake-category-id',
+      categoryId: randomUUID(),
     };
 
     try {

@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
@@ -23,10 +24,10 @@ describe('Create user (E2E)', () => {
 
   test('[POST] /users', async () => {
     const userData = {
-      name: 'John Doe',
-      username: 'john.doe23',
-      avatarUrl: 'http://mydomain.com/avatar1234.jpg',
-      password: 'password@123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: faker.internet.password(),
     };
 
     const response = await request(app.getHttpServer())
@@ -45,10 +46,10 @@ describe('Create user (E2E)', () => {
 
   test('[POST] /users throw UserAlreadyExistsException', async () => {
     const userData = {
-      name: 'John Doe',
-      username: 'john.doe23',
-      avatarUrl: 'http://mydomain.com/avatar1234.jpg',
-      password: 'password@123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: faker.internet.password(),
     };
 
     await request(app.getHttpServer()).post('/users').send(userData);

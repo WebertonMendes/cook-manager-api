@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
@@ -15,10 +17,10 @@ describe('Update User', () => {
 
   it('should be able to update user data by id', async () => {
     const newUser = {
-      name: 'Webs System',
-      username: 'Webs.System',
-      avatarUrl: 'https://github.com/WebertonMendes.png',
-      password: 'password123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: faker.internet.password(),
     };
 
     await inMemoryUsersRepository.create(newUser);
@@ -29,24 +31,20 @@ describe('Update User', () => {
 
     expect(savedUser.isActive).toEqual(true);
 
-    const userId = savedUser.id;
-    const data = { isActive: false };
+    await updateUser.execute(savedUser.id, { isActive: false });
 
-    await updateUser.execute(userId, data);
-
-    expect(savedUser.isActive).toEqual(data.isActive);
+    expect(savedUser.isActive).toEqual(false);
     expect(savedUser.username).toEqual(newUser.username);
   });
 
   it('should be able to throw a UserNotFoundException if the user id not found.', async () => {
-    const fakeUserId = 'fake-userId';
-    const data = { isActive: false };
+    const userId = randomUUID();
 
     try {
-      await updateUser.execute(fakeUserId, data);
+      await updateUser.execute(userId, { isActive: false });
     } catch (error) {
       expect(() => {
-        throw new UserNotFoundException(fakeUserId);
+        throw new UserNotFoundException(userId);
       }).toThrow(UserNotFoundException);
     }
   });

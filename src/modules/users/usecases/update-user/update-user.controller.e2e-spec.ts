@@ -1,5 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
@@ -8,7 +9,7 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { UserFactory } from 'test/factories/make-users';
 
-describe('Update user by ID (E2E)', () => {
+describe('Update user (E2E)', () => {
   let app: INestApplication;
   let userFactory: UserFactory;
   let prisma: PrismaService;
@@ -44,8 +45,8 @@ describe('Update user by ID (E2E)', () => {
     expect(userOnDatabase.isActive).toEqual(false);
   });
 
-  test('[PATCH] /users/:id throw not found', async () => {
-    const userId = 'fakeUserId';
+  test('[PATCH] /users/:id throw UserNotFoundException', async () => {
+    const userId = randomUUID();
 
     const response = await request(app.getHttpServer())
       .patch(`/users/${userId}`)

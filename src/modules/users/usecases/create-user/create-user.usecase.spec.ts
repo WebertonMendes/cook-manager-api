@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { FakeHasher } from 'test/cryptography/fake-hasher';
@@ -19,10 +20,10 @@ describe('Create User', () => {
 
   it('should be able to create a new user', async () => {
     const user = {
-      name: 'Webs System',
-      username: 'Webs.System',
-      avatarUrl: 'https://github.com/WebertonMendes.png',
-      password: 'password123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: faker.internet.password(),
     };
 
     await createUser.execute(user);
@@ -36,10 +37,10 @@ describe('Create User', () => {
 
   it('should be able to throw a UserAlreadyExistsException if the username already exists.', async () => {
     const user = {
-      name: 'Webs System',
-      username: 'Webs.System',
-      avatarUrl: 'https://github.com/WebertonMendes.png',
-      password: 'password123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: faker.internet.password(),
     };
 
     try {
@@ -53,14 +54,16 @@ describe('Create User', () => {
   });
 
   it('should hash user password upon registration', async () => {
+    const mockedPassword = faker.internet.password();
+
     await createUser.execute({
-      name: 'Webs System',
-      username: 'Webs.System',
-      avatarUrl: 'https://github.com/WebertonMendes.png',
-      password: 'password123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: mockedPassword,
     });
 
-    const hashedPassword = await fakeHasher.hash('password123');
+    const hashedPassword = await fakeHasher.hash(mockedPassword);
 
     const savedUser = inMemoryUsersRepository.items[0];
 

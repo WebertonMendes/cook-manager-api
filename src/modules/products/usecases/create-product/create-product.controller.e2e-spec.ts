@@ -1,5 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
@@ -60,7 +61,7 @@ describe('Create product (E2E)', () => {
       description: 'Product Description',
       price: 10.99,
       imageUrl: 'https://mysite.com/images/product001.png',
-      categoryId: 'fake-category-id',
+      categoryId: randomUUID(),
     };
 
     await request(app.getHttpServer()).post('/products').send(productData);

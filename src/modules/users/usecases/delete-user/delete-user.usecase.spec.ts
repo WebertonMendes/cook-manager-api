@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
@@ -15,10 +17,10 @@ describe('Delete User', () => {
 
   it('should be able to delete user by id', async () => {
     const newUser = {
-      name: 'Webs System',
-      username: 'Webs.System',
-      avatarUrl: 'https://github.com/WebertonMendes.png',
-      password: 'password123',
+      name: faker.person.fullName(),
+      username: faker.internet.userName(),
+      avatarUrl: faker.image.url(),
+      password: faker.internet.password(),
     };
 
     await inMemoryUsersRepository.create(newUser);
@@ -35,13 +37,13 @@ describe('Delete User', () => {
   });
 
   it('should be able to throw a UserNotFoundException if the user id not found.', async () => {
-    const fakeUserId = 'fake-userId';
+    const userId = randomUUID();
 
     try {
-      await deleteUser.execute(fakeUserId);
+      await deleteUser.execute(userId);
     } catch (error) {
       expect(() => {
-        throw new UserNotFoundException(fakeUserId);
+        throw new UserNotFoundException(userId);
       }).toThrow(UserNotFoundException);
     }
   });
