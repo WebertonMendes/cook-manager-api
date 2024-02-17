@@ -6,6 +6,29 @@ O formato deste arquivo é baseado em [Keep a Changelog](https://keepachangelog.
 
 <br/>
 
+## [1.3.0] - UNRELEASED
+
+### Added
+
+- Criação dos endpoints para gerenciamento de `PEDIDOS`:
+  - CREATE >> [POST] "/orders"
+  - LIST >> [GET] "/orders"
+  - FIND >> [GET] "/orders/:id"
+  - UPDATE >> [PATCH] "/orders/:id"
+  - DELETE >> [DELETE] "/orders/:id"
+
+- Criação dos endpoints para gerenciamento de `ITEMS-DO-PEDIDOS`:
+  - ADD_ITEMS >> [POST] "/order/items/:orderId"
+  - FIND_ALL_ITEMS >> [GET] "/order/items/:orderId"
+  - REMOVE_ITEM >> [PATCH] "/order/items/:orderId"
+  - REMOVE_ITEM >> [DELETE] "/order/items/:orderId"
+
+### Changed
+
+- Alteração no endpoint de inativação de `PRODUTOS`, e adicionado endpoint para remoção de `PRODUTOS`:
+  - DELETE >> [DELETE] "/products/:id" -> "Caso não possua vínculos pode ser removido"
+  - INATIVAR >> [PUT] "/products/:id/inactivate" -> "Caso possua vínculos não pode ser removido mas pode ser inativado"
+
 ## [1.2.0] - 2024-01-09
 
 ### Added
