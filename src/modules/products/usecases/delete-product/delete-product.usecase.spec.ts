@@ -1,12 +1,13 @@
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { InMemoryOrderItemsRepository } from 'test/repositories/in-memory-order-item.repository';
+import { InMemoryOrdersRepository } from 'test/repositories/in-memory-order.repository';
 import { InMemoryProductsRepository } from 'test/repositories/in-memory-product.repository';
+import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
+import { ProductCannotDeletedException } from '../../exceptions/product-cannot-deleted-exception';
 import { ProductNotFoundException } from '../../exceptions/product-not-found-exception';
 import { DeleteProductUseCase } from './delete-product.usecase';
-import { InMemoryOrderItemsRepository } from 'test/repositories/in-memory-order-item.repository';
-import { ProductCannotDeletedException } from '../../exceptions/product-cannot-deleted-exception';
-import { InMemoryOrdersRepository } from 'test/repositories/in-memory-order.repository';
-import { InMemoryUsersRepository } from 'test/repositories/in-memory-user.repository';
 
 let inMemoryProductsRepository: InMemoryProductsRepository;
 let inMemoryOrdersRepository: InMemoryOrdersRepository;
@@ -50,7 +51,7 @@ describe('Delete Product', () => {
   });
 
   it('should be able to throw a ProductNotFoundException if the product id not found.', async () => {
-    const fakeProductId = 'fake-productId';
+    const fakeProductId = randomUUID();
 
     try {
       await deleteProduct.execute(fakeProductId);

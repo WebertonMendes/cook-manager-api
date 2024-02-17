@@ -1,5 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
 import request from 'supertest';
 import { beforeAll, describe, expect, test } from 'vitest';
 
@@ -45,7 +46,7 @@ describe('Delete order by ID (E2E)', () => {
   });
 
   test('[DELETE] /orders/:id throw OrderNotFoundException', async () => {
-    const orderId = 'fake-orderId';
+    const orderId = randomUUID();
 
     const response = await request(app.getHttpServer())
       .delete(`/orders/${orderId}`)

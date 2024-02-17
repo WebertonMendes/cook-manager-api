@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InMemoryCategoriesRepository } from 'test/repositories/in-memory-category.repository';
@@ -45,7 +46,7 @@ describe('Find product by ID', () => {
   });
 
   it('should be able to throw a ProductNotFoundException if the product id not found.', async () => {
-    const fakeProductId = 'fake-productId';
+    const fakeProductId = randomUUID();
 
     try {
       await findProductById.execute(fakeProductId);

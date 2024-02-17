@@ -37,7 +37,7 @@ describe('Delete Order', () => {
   });
 
   it('should be able to throw a OrderNotFoundException if the order id not found.', async () => {
-    const fakeOrderId = 'fake-orderId';
+    const fakeOrderId = randomUUID();
 
     try {
       await deleteOrder.execute(fakeOrderId);

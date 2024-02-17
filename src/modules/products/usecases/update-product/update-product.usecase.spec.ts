@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { InMemoryProductsRepository } from 'test/repositories/in-memory-product.repository';
@@ -40,7 +41,7 @@ describe('Update Product', () => {
   });
 
   it('should be able to throw a ProductNotFoundException if the product id not found.', async () => {
-    const fakeProductId = 'fake-productId';
+    const fakeProductId = randomUUID();
     const data = { isActive: false };
 
     try {
