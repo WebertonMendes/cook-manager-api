@@ -103,6 +103,7 @@ describe('Delete Product', () => {
       productId: savedProduct.id,
       quantity: 2,
       observation: 'this is my observation',
+      userId: user.id,
     });
 
     try {

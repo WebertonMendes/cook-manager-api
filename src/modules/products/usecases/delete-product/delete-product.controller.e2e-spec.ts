@@ -27,17 +27,6 @@ describe('Delete product by ID (E2E)', () => {
   });
 
   test('[DELETE] /products/:id', async () => {
-    await request(app.getHttpServer()).post('/categories').send({
-      id: '50228d88-a780-4982-b844-c95c405cc290',
-      name: 'Inactive Products',
-    });
-
-    const category = await prisma.category.findUnique({
-      where: {
-        name: 'Inactive Products',
-      },
-    });
-
     const product = await productFactory.makePrismaProduct();
 
     const response = await request(app.getHttpServer())
@@ -51,10 +40,7 @@ describe('Delete product by ID (E2E)', () => {
     });
 
     expect(response.statusCode).toBe(HttpStatus.OK);
-    expect(productOnDatabase).toBeTruthy();
-    expect(productOnDatabase.categoryId).toEqual(category.id);
-    expect(productOnDatabase.imageUrl).toBeNull();
-    expect(productOnDatabase.isActive).toEqual(false);
+    expect(productOnDatabase).toBeNull();
   });
 
   test('[DELETE] /products/:id throw not found', async () => {
