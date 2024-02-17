@@ -23,6 +23,7 @@ function makeUser(override: Partial<UserEntity> = {}) {
   return new UserEntity({
     name: faker.person.fullName(),
     username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
     password: faker.internet.password(),
     ...override,
   });
