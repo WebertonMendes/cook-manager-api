@@ -28,15 +28,11 @@ describe('Inactive product by ID (E2E)', () => {
   });
 
   test('[PUT] /products/:id', async () => {
-    await request(app.getHttpServer()).post('/categories').send({
-      id: '50228d88-a780-4982-b844-c95c405cc290',
-      name: 'Inactive Products',
-    });
+    const inactiveProductsCategoryId = '50228d88-a780-4982-b844-c95c405cc290';
 
-    const category = await prisma.category.findUnique({
-      where: {
-        name: 'Inactive Products',
-      },
+    await request(app.getHttpServer()).post('/categories').send({
+      id: inactiveProductsCategoryId,
+      name: 'Inactive Products',
     });
 
     const product = await productFactory.makePrismaProduct();
@@ -53,7 +49,7 @@ describe('Inactive product by ID (E2E)', () => {
 
     expect(response.statusCode).toBe(HttpStatus.OK);
     expect(productOnDatabase).toBeTruthy();
-    expect(productOnDatabase.categoryId).toEqual(category.id);
+    expect(productOnDatabase.categoryId).toEqual(inactiveProductsCategoryId);
     expect(productOnDatabase.imageUrl).toBeNull();
     expect(productOnDatabase.isActive).toEqual(false);
   });
