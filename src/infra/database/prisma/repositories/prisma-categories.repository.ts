@@ -22,7 +22,7 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
     filters: CategoriesFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListCategoriesResponseDto> {
-    const categories = await this.prisma.category.findMany({
+    const queryArgs: Prisma.CategoryFindManyArgs = {
       where: {
         name: {
           contains: filters.name,
@@ -38,12 +38,13 @@ export class PrismaCategoriesRepository implements CategoriesRepository {
       },
       take: pagination.take,
       skip: pagination.skip,
-    });
+    };
 
-    const totalCategories =
-      categories.length < 1
-        ? categories.length
-        : await this.prisma.category.count();
+    const categories = await this.prisma.category.findMany(queryArgs);
+
+    const totalCategories = await this.prisma.category.count({
+      where: queryArgs.where,
+    });
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,

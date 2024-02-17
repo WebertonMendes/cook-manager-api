@@ -47,20 +47,39 @@ describe('Find All Categories', () => {
 
     const result = await findAllCategories.execute(queryParams);
 
-    expect(result.data.length).toEqual(3);
+    expect(result.data.length).toEqual(1);
     expect(result.pagination.take).toEqual(3);
     expect(result.pagination.page).toEqual(1);
-    expect(result.pagination.itemCount).toEqual(5);
-    expect(result.pagination.pageCount).toEqual(2);
+    expect(result.pagination.itemCount).toEqual(1);
+    expect(result.pagination.pageCount).toEqual(1);
     expect(result.pagination.hasPreviousPage).toEqual(false);
-    expect(result.pagination.hasNextPage).toEqual(true);
+    expect(result.pagination.hasNextPage).toEqual(false);
   });
 });
 
 async function mockListCategories() {
-  await inMemoryCategoriesRepository.create({ name: 'Category 1' });
-  await inMemoryCategoriesRepository.create({ name: 'Category 2' });
-  await inMemoryCategoriesRepository.create({ name: 'Category 3' });
-  await inMemoryCategoriesRepository.create({ name: 'Category 4' });
-  await inMemoryCategoriesRepository.create({ name: 'Category 5' });
+  await inMemoryCategoriesRepository.create({
+    name: 'Category 1',
+    isActive: true,
+  });
+
+  await inMemoryCategoriesRepository.create({
+    name: 'Category 2',
+    isActive: true,
+  });
+
+  await inMemoryCategoriesRepository.create({
+    name: 'Category 3',
+    isActive: true,
+  });
+
+  await inMemoryCategoriesRepository.create({
+    name: 'Category 4',
+    isActive: true,
+  });
+
+  await inMemoryCategoriesRepository.create({
+    name: 'Category 5',
+    isActive: false,
+  });
 }

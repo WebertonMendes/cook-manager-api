@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CreateOrderDto } from '@/modules/orders/dto/create-order.dto';
 import { ListOrdersResponseDto } from '@/modules/orders/dto/list-orders-response.dto';
+import { OrderExistsDto } from '@/modules/orders/dto/order-exists.dto';
 import { OrderResponseDto } from '@/modules/orders/dto/order-response.dto';
 import { OrdersFilterOptionsDto } from '@/modules/orders/dto/orders-filter-options.dto';
 import { UpdateOrderDto } from '@/modules/orders/dto/update-order.dto';
 import { OrdersRepository } from '@/modules/orders/repositories/orders.repository';
-import { Prisma } from '@prisma/client';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper';
 import { PrismaService } from '../prisma.service';
-import { OrderExistsDto } from '@/modules/orders/dto/order-exists.dto';
 
 @Injectable()
 export class PrismaOrdersRepository implements OrdersRepository {
@@ -23,7 +23,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
     filters: OrdersFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListOrdersResponseDto> {
-    const orders = await this.prisma.order.findMany({
+    const queryArgs: Prisma.OrderFindManyArgs = {
       where: {
         table: filters.table,
         clientId: filters.clientId,
@@ -37,10 +37,13 @@ export class PrismaOrdersRepository implements OrdersRepository {
       },
       take: pagination.take,
       skip: pagination.skip,
-    });
+    };
 
-    const totalOrders =
-      orders.length < 1 ? orders.length : await this.prisma.order.count();
+    const orders = await this.prisma.order.findMany(queryArgs);
+
+    const totalOrders = await this.prisma.order.count({
+      where: queryArgs.where,
+    });
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,

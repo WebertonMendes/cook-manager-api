@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { Order } from '@/infra/helpers/pagination/constants/order.constants';
@@ -28,7 +29,7 @@ describe('Find All Users', () => {
     expect(result.data.length).toEqual(3);
     expect(result.pagination.take).toEqual(3);
     expect(result.pagination.page).toEqual(1);
-    expect(result.pagination.itemCount).toEqual(5);
+    expect(result.pagination.itemCount).toEqual(6);
     expect(result.pagination.pageCount).toEqual(2);
     expect(result.pagination.hasPreviousPage).toEqual(false);
     expect(result.pagination.hasNextPage).toEqual(true);
@@ -38,6 +39,7 @@ describe('Find All Users', () => {
     await mockListUsers();
 
     const queryParams = {
+      role: UserRole.ADMIN,
       isActive: false,
       order: Order.ASC,
       take: 3,
@@ -46,65 +48,68 @@ describe('Find All Users', () => {
 
     const result = await findAllUsers.execute(queryParams);
 
-    expect(result.data.length).toEqual(3);
+    expect(result.data.length).toEqual(1);
     expect(result.pagination.take).toEqual(3);
     expect(result.pagination.page).toEqual(1);
-    expect(result.pagination.itemCount).toEqual(5);
-    expect(result.pagination.pageCount).toEqual(2);
+    expect(result.pagination.itemCount).toEqual(1);
+    expect(result.pagination.pageCount).toEqual(1);
     expect(result.pagination.hasPreviousPage).toEqual(false);
-    expect(result.pagination.hasNextPage).toEqual(true);
+    expect(result.pagination.hasNextPage).toEqual(false);
   });
 });
 
 async function mockListUsers() {
-  const user1 = {
-    name: 'User 1',
-    username: 'username1',
-    avatarUrl: 'https://github.com/user1.png',
+  await inMemoryUsersRepository.create({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
     role: UserRole.ADMIN,
-    password: 'password123',
-  };
+    password: faker.internet.password(),
+    isActive: true,
+  });
 
-  await inMemoryUsersRepository.create(user1);
-
-  const user2 = {
-    name: 'User 2',
-    username: 'username2',
-    avatarUrl: 'https://github.com/user2.png',
+  await inMemoryUsersRepository.create({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
     role: UserRole.KITCHEN,
-    password: 'password123',
-  };
+    password: faker.internet.password(),
+    isActive: true,
+  });
 
-  await inMemoryUsersRepository.create(user2);
-
-  const user3 = {
-    name: 'User 3',
-    username: 'username3',
-    avatarUrl: 'https://github.com/user3.png',
+  await inMemoryUsersRepository.create({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
     role: UserRole.KITCHEN,
-    password: 'password123',
-  };
+    password: faker.internet.password(),
+    isActive: true,
+  });
 
-  await inMemoryUsersRepository.create(user3);
-
-  const user4 = {
-    name: 'User 4',
-    username: 'username4',
-    avatarUrl: 'https://github.com/user4.png',
+  await inMemoryUsersRepository.create({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
     role: UserRole.SERVICE,
-    password: 'password123',
-  };
+    password: faker.internet.password(),
+    isActive: true,
+  });
 
-  await inMemoryUsersRepository.create(user4);
-
-  const user5 = {
-    name: 'User 5',
-    username: 'username5',
-    avatarUrl: 'https://github.com/user5.png',
+  await inMemoryUsersRepository.create({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
     role: UserRole.SERVICE,
-    password: 'password123',
+    password: faker.internet.password(),
     isActive: false,
-  };
+  });
 
-  await inMemoryUsersRepository.create(user5);
+  await inMemoryUsersRepository.create({
+    name: faker.person.fullName(),
+    username: faker.internet.userName(),
+    avatarUrl: faker.image.url(),
+    role: UserRole.ADMIN,
+    password: faker.internet.password(),
+    isActive: false,
+  });
 }

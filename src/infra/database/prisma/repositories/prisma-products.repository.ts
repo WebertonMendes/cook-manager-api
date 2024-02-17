@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { Order } from '@/infra/helpers/pagination/constants/order.constants';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
@@ -9,7 +10,6 @@ import { ProductResponseDto } from '@/modules/products/dto/product-response.dto'
 import { ProductsFilterOptionsDto } from '@/modules/products/dto/products-filter-options.dto';
 import { UpdateProductDto } from '@/modules/products/dto/update-product.dto';
 import { ProductsRepository } from '@/modules/products/repositories/products.repository';
-import { Prisma } from '@prisma/client';
 import { IntegrationFailureException } from '../exceptions/integration-failure.exception';
 import { PrismaProductMapper } from '../mappers/prisma-product-mapper';
 import { PrismaService } from '../prisma.service';
@@ -22,7 +22,7 @@ export class PrismaProductsRepository implements ProductsRepository {
     filters: ProductsFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListProductsResponseDto> {
-    const products = await this.prisma.product.findMany({
+    const queryArgs: Prisma.ProductFindManyArgs = {
       where: {
         name: {
           contains: filters.name,
@@ -39,10 +39,13 @@ export class PrismaProductsRepository implements ProductsRepository {
       },
       take: pagination.take,
       skip: pagination.skip,
-    });
+    };
 
-    const totalProducts =
-      products.length < 1 ? products.length : await this.prisma.product.count();
+    const products = await this.prisma.product.findMany(queryArgs);
+
+    const totalProducts = await this.prisma.product.count({
+      where: queryArgs.where,
+    });
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,

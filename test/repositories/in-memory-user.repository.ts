@@ -1,3 +1,4 @@
+import { handleFormatFilters } from '@/infra/helpers/filters/formatFilters';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { ListUsersResponseDto } from '@/modules/users/dto/list-users-response.dto';
@@ -15,23 +16,28 @@ export class InMemoryUsersRepository implements UsersRepository {
     filters: UsersFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListUsersResponseDto> {
-    const users = this.items.filter(
-      (user) =>
-        user.name.includes(filters.name) ||
-        user.username.includes(filters.username) ||
-        user.role.includes(filters.role) ||
-        user.isActive === filters.isActive,
-    );
+    const filter = handleFormatFilters({
+      name: filters.name,
+      username: filters.username,
+      role: filters.role,
+      isActive: filters.isActive,
+    });
 
-    const allUsers = this.items.slice(0, pagination.take);
+    const filteredUsers = this.items.filter(
+      (user) =>
+        (!filter.name || user.name.includes(filters.name)) &&
+        (!filter.username || user.username.includes(filters.username)) &&
+        (!filter.role || user.role.includes(filters.role)) &&
+        (filter.isActive === undefined || user.isActive === filters.isActive),
+    );
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,
-      itemCount: users.length > 0 ? users.length : this.items.length,
+      itemCount: filteredUsers.length,
     });
 
     return {
-      data: users.length > 0 ? users : allUsers,
+      data: filteredUsers.slice(0, pagination.take),
       pagination: paginationMeta,
     };
   }

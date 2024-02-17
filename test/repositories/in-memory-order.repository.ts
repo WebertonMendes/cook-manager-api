@@ -1,4 +1,5 @@
 import { formatDate } from '@/infra/helpers/date/format-date.helper';
+import { handleFormatFilters } from '@/infra/helpers/filters/formatFilters';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CreateOrderDto } from '@/modules/orders/dto/create-order.dto';
@@ -13,13 +14,42 @@ import { OrdersRepository } from '@/modules/orders/repositories/orders.repositor
 export class InMemoryOrdersRepository implements OrdersRepository {
   public items: OrderEntity[] = [];
 
-  async create(data: CreateOrderDto): Promise<void> {
-    const order = new OrderEntity({
-      table: data.table,
-      clientId: data.clientId,
+  async findAll(
+    filters: OrdersFilterOptionsDto,
+    pagination: PaginationOptionsDTO,
+  ): Promise<ListOrdersResponseDto> {
+    const filter = handleFormatFilters({
+      table: filters.table,
+      clientId: filters.clientId,
+      isFinished: filters.isFinished,
     });
 
-    this.items.push(order);
+    const filteredOrders = this.items.filter(
+      (order) =>
+        (!filter.table || order.table === filters.table) &&
+        (!filter.clientId || order.clientId === filters.clientId) &&
+        (filter.isFinished === undefined ||
+          order.isFinished === filters.isFinished),
+    );
+
+    const paginationMeta = new PaginationMetaDTO({
+      pageOptionsDTO: pagination,
+      itemCount: filteredOrders.length,
+    });
+
+    const ordersFormatted =
+      filteredOrders.length > 0
+        ? filteredOrders.map((order) => {
+            return this.toDto(order);
+          })
+        : this.items.map((order) => {
+            return this.toDto(order);
+          });
+
+    return {
+      data: ordersFormatted.slice(0, pagination.take),
+      pagination: paginationMeta,
+    };
   }
 
   async findById(id: string): Promise<OrderResponseDto | null> {
@@ -43,6 +73,15 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     return this.toDto(orderExists);
   }
 
+  async create(data: CreateOrderDto): Promise<void> {
+    const order = new OrderEntity({
+      table: data.table,
+      clientId: data.clientId,
+    });
+
+    this.items.push(order);
+  }
+
   async update(id: string, data: UpdateOrderDto): Promise<void> {
     const order = this.items.filter((order) => order.id === id)[0];
 
@@ -55,39 +94,6 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
   async delete(id: string): Promise<void> {
     this.items = this.items.filter((item) => item.id !== id);
-  }
-
-  async findAll(
-    filters: OrdersFilterOptionsDto,
-    pagination: PaginationOptionsDTO,
-  ): Promise<ListOrdersResponseDto> {
-    const orders = this.items.filter(
-      (orders) =>
-        orders.table === filters.table ||
-        orders.clientId === filters.clientId ||
-        orders.isFinished === filters.isFinished,
-    );
-
-    const paginationMeta = new PaginationMetaDTO({
-      pageOptionsDTO: pagination,
-      itemCount: orders.length > 0 ? orders.length : this.items.length,
-    });
-
-    const ordersFormatted =
-      orders.length > 0
-        ? orders.map((order) => {
-            return this.toDto(order);
-          })
-        : this.items.map((order) => {
-            return this.toDto(order);
-          });
-
-    const allOrders = ordersFormatted.slice(0, pagination.take);
-
-    return {
-      data: allOrders,
-      pagination: paginationMeta,
-    };
   }
 
   private toDto(order: OrderEntity): OrderResponseDto | null {

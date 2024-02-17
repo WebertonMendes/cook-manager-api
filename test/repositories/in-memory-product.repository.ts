@@ -1,14 +1,15 @@
 import { Prisma } from '@prisma/client';
 
+import { handleFormatFilters } from '@/infra/helpers/filters/formatFilters';
+import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
+import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CreateProductDto } from '@/modules/products/dto/create-product.dto';
+import { ListProductsResponseDto } from '@/modules/products/dto/list-products-response.dto';
 import { ProductResponseDto } from '@/modules/products/dto/product-response.dto';
+import { ProductsFilterOptionsDto } from '@/modules/products/dto/products-filter-options.dto';
+import { UpdateProductDto } from '@/modules/products/dto/update-product.dto';
 import { ProductEntity } from '@/modules/products/entities/product.entity';
 import { ProductsRepository } from '@/modules/products/repositories/products.repository';
-import { ProductsFilterOptionsDto } from '@/modules/products/dto/products-filter-options.dto';
-import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
-import { ListProductsResponseDto } from '@/modules/products/dto/list-products-response.dto';
-import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
-import { UpdateProductDto } from '@/modules/products/dto/update-product.dto';
 
 export class InMemoryProductsRepository implements ProductsRepository {
   public items: ProductEntity[] = [];
@@ -17,22 +18,27 @@ export class InMemoryProductsRepository implements ProductsRepository {
     filters: ProductsFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListProductsResponseDto> {
-    const products = this.items.filter(
-      (products) =>
-        products.name.includes(filters.name) ||
-        products.categoryId === filters.categoryId ||
-        products.isActive === filters.isActive,
-    );
+    const filter = handleFormatFilters({
+      name: filters.name,
+      categoryId: filters.categoryId,
+      isActive: filters.isActive,
+    });
 
-    const allProducts = this.items.slice(0, pagination.take);
+    const filteredProducts = this.items.filter(
+      (product) =>
+        (!filter.name || product.name.includes(filters.name)) &&
+        (!filter.categoryId || product.categoryId === filters.categoryId) &&
+        (filter.isActive === undefined ||
+          product.isActive === filters.isActive),
+    );
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,
-      itemCount: products.length > 0 ? products.length : this.items.length,
+      itemCount: filteredProducts.length,
     });
 
     return {
-      data: products.length > 0 ? products : allProducts,
+      data: filteredProducts.slice(0, pagination.take),
       pagination: paginationMeta,
     };
   }
@@ -52,6 +58,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
       price: new Prisma.Decimal(data.price),
       imageUrl: data.imageUrl,
       categoryId: data.categoryId,
+      isActive: data.isActive,
     });
 
     this.items.push(product);

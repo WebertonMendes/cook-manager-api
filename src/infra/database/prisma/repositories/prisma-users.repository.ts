@@ -22,7 +22,7 @@ export class PrismaUsersRepository implements UsersRepository {
     filters: UsersFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListUsersResponseDto> {
-    const users = await this.prisma.user.findMany({
+    const queryArgs: Prisma.UserFindManyArgs = {
       where: {
         name: {
           contains: filters.name,
@@ -43,10 +43,13 @@ export class PrismaUsersRepository implements UsersRepository {
       },
       take: pagination.take,
       skip: pagination.skip,
-    });
+    };
 
-    const totalUsers =
-      users.length < 1 ? users.length : await this.prisma.user.count();
+    const users = await this.prisma.user.findMany(queryArgs);
+
+    const totalUsers = await this.prisma.user.count({
+      where: queryArgs.where,
+    });
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,

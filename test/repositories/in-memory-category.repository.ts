@@ -1,3 +1,4 @@
+import { handleFormatFilters } from '@/infra/helpers/filters/formatFilters';
 import { PaginationMetaDTO } from '@/infra/helpers/pagination/dtos/pagination-meta.dto';
 import { PaginationOptionsDTO } from '@/infra/helpers/pagination/dtos/pagination-options.dto';
 import { CategoriesFilterOptionsDto } from '@/modules/categories/dto/categories-filter-options.dto';
@@ -15,21 +16,25 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     filters: CategoriesFilterOptionsDto,
     pagination: PaginationOptionsDTO,
   ): Promise<ListCategoriesResponseDto> {
-    const categories = this.items.filter(
-      (category) =>
-        category.name.includes(filters.name) ||
-        category.isActive === filters.isActive,
-    );
+    const filter = handleFormatFilters({
+      name: filters.name,
+      isActive: filters.isActive,
+    });
 
-    const allCategories = this.items.slice(0, pagination.take);
+    const filteredCategories = this.items.filter(
+      (category) =>
+        (!filter.name || category.name.includes(filters.name)) &&
+        (filter.isActive === undefined ||
+          category.isActive === filters.isActive),
+    );
 
     const paginationMeta = new PaginationMetaDTO({
       pageOptionsDTO: pagination,
-      itemCount: categories.length > 0 ? categories.length : this.items.length,
+      itemCount: filteredCategories.length,
     });
 
     return {
-      data: categories.length > 0 ? categories : allCategories,
+      data: filteredCategories.slice(0, pagination.take),
       pagination: paginationMeta,
     };
   }

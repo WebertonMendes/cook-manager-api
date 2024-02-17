@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
+import {
+  handleFormatFilters,
+  validateBooleanValue,
+} from '@/infra/helpers/filters/formatFilters';
 import { handlerPagination } from '@/infra/helpers/pagination/utils/handlerPagination';
 import { ListProductsOptionsDto } from '../../dto/list-products-options.dto';
 import { ListProductsResponseDto } from '../../dto/list-products-response.dto';
 import { ProductsRepository } from '../../repositories/products.repository';
-import { handleProductFilters } from '../../utils/handleProductFilters';
 
 @Injectable()
 export class FindAllProductsUseCase {
@@ -13,10 +16,10 @@ export class FindAllProductsUseCase {
   async execute(
     options: ListProductsOptionsDto,
   ): Promise<ListProductsResponseDto> {
-    const filters = handleProductFilters({
+    const filters = handleFormatFilters({
       name: options.name,
       categoryId: options.categoryId,
-      isActive: options.isActive,
+      isActive: validateBooleanValue(options.isActive),
     });
 
     const pagination = handlerPagination({
