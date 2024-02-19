@@ -91,7 +91,7 @@ export class PrismaProductsRepository implements ProductsRepository {
         where: { id },
         data: {
           imageUrl: null,
-          categoryId: process.env.INACTIVE_PRODUCTS_CATEGORY_ID,
+          categoryId: '50228d88-a780-4982-b844-c95c405cc290',
           isActive: false,
         },
       });
