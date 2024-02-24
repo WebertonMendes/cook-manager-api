@@ -2,8 +2,8 @@
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
     "table" INTEGER NOT NULL,
-    "clientId" INTEGER NOT NULL,
-    "totalPrice" DECIMAL(10,2),
+    "client_id" INTEGER NOT NULL,
+    "total_price" DECIMAL(10,2),
     "is_finished" BOOLEAN NOT NULL DEFAULT false,
     "user_id" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
