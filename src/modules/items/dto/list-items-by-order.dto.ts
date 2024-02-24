@@ -1,4 +1,4 @@
-import { OrderItemsDetailsDto } from './order-items-details.dto';
+import { OrderItemDetailsDto } from './order-item-details.dto';
 
 export class ListItemsByOrderDto {
   id: string;
@@ -9,5 +9,5 @@ export class ListItemsByOrderDto {
   userId: string;
   createdAt: string;
   updatedAt: string;
-  items: OrderItemsDetailsDto[];
+  items: OrderItemDetailsDto[];
 }

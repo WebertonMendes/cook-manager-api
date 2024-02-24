@@ -4,15 +4,21 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  Min,
 } from 'class-validator';
 
 export class AddOrderItemDto {
   @IsNotEmpty()
-  @IsString()
+  @IsUUID()
+  orderId: string;
+
+  @IsNotEmpty()
+  @IsUUID()
   productId: string;
 
   @IsNotEmpty()
   @IsNumber()
+  @Min(1)
   quantity: number;
 
   @IsOptional()
