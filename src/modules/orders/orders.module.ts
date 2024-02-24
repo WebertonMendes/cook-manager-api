@@ -11,6 +11,7 @@ import { FindOrderByIdController } from './usecases/find-order-by-id/find-order-
 import { FindOrderByIdUseCase } from './usecases/find-order-by-id/find-order-by-id.usecase';
 import { UpdateOrderController } from './usecases/update-order/update-order.controller';
 import { UpdateOrderUseCase } from './usecases/update-order/update-order.usecase';
+import { RefreshOrderPriceUseCase } from './usecases/refresh-order-price/refresh-order-price.usecase';
 
 @Module({
   imports: [DatabaseModule],
@@ -27,6 +28,8 @@ import { UpdateOrderUseCase } from './usecases/update-order/update-order.usecase
     FindAllOrdersUseCase,
     UpdateOrderUseCase,
     DeleteOrderUseCase,
+    RefreshOrderPriceUseCase,
   ],
+  exports: [RefreshOrderPriceUseCase],
 })
 export class OrdersModule {}
