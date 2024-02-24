@@ -1,14 +1,14 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
 import { AddOrderItemDto } from '../../dto/add-order-item.dto';
 import { AddOrderItemUseCase } from './add-order-item.usecase';
 
-@Controller('orders')
+@Controller('orders/items')
 export class AddOrderItemController {
   constructor(private readonly addOrderItem: AddOrderItemUseCase) {}
 
-  @Post(':id/add-item')
-  async handle(@Param('id') id: string, @Body() orderItem: AddOrderItemDto) {
-    await this.addOrderItem.execute(id, orderItem);
+  @Post()
+  async handle(@Body() orderItem: AddOrderItemDto) {
+    await this.addOrderItem.execute(orderItem);
   }
 }

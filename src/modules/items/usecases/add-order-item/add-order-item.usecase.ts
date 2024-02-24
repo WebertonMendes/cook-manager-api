@@ -10,6 +10,7 @@ import { ProductNotFoundException } from '@/modules/products/exceptions/product-
 import { ProductsRepository } from '@/modules/products/repositories/products.repository';
 import { AddOrderItemDto } from '../../dto/add-order-item.dto';
 import { OrderItemsRepository } from '../../repositories/order-items.repository';
+import { RefreshOrderPriceUseCase } from '@/modules/orders/usecases/refresh-order-price/refresh-order-price.usecase';
 
 @Injectable()
 export class AddOrderItemUseCase {
@@ -17,28 +18,26 @@ export class AddOrderItemUseCase {
     private repository: OrderItemsRepository,
     private ordersRepository: OrdersRepository,
     private productsRepository: ProductsRepository,
+    private refreshOrderPrice: RefreshOrderPriceUseCase,
   ) {}
 
-  async execute(orderId: string, orderItem: AddOrderItemDto): Promise<void> {
+  async execute(orderItem: AddOrderItemDto): Promise<void> {
     const product = await this.productsRepository.findById(orderItem.productId);
     this.validateProduct(orderItem.productId, product);
 
-    const order = await this.ordersRepository.findById(orderId);
-    this.validateOrder(orderId, order);
+    const order = await this.ordersRepository.findById(orderItem.orderId);
+    this.validateOrder(orderItem.orderId, order);
 
     const newOrderItem = {
-      orderId,
+      orderId: orderItem.orderId,
       productId: orderItem.productId,
       observation: orderItem.observation,
       quantity: orderItem.quantity,
       userId: orderItem.userId,
     };
 
-    const totalPriceItems = Number(product.price) * orderItem.quantity;
-    const totalPrice = order.totalPrice + totalPriceItems;
-
     await this.repository.create(newOrderItem);
-    await this.ordersRepository.update(orderId, { totalPrice });
+    await this.refreshOrderPrice.execute(orderItem.orderId);
   }
 
   private validateProduct(id: string, product: ProductResponseDto) {
