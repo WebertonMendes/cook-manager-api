@@ -15,6 +15,13 @@ enum UserRole {
   KITCHEN
 }
 
+enum OrderItemStatus {
+  PENDING
+  PREPARING
+  READY
+  DELIVERED
+}
+
 model User {
   id        String    @id @default(uuid())
   name      String
@@ -64,8 +71,8 @@ model Product {
 model Order {
   id         String    @id @default(uuid())
   table      Int
-  clientId   Int
-  totalPrice Decimal?  @db.Decimal(10, 2)
+  clientId   Int       @map("client_id")
+  totalPrice Decimal?  @map("total_price") @db.Decimal(10, 2)
   isFinished Boolean   @default(false) @map("is_finished")
   userId     String?   @map("user_id")
   createdAt  DateTime  @default(now()) @map("created_at")
@@ -78,17 +85,19 @@ model Order {
 }
 
 model OrderItems {
-  orderId     String
-  productId   String
+  id          String          @id @default(uuid())
+  orderId     String          @map("order_id")
+  productId   String          @map("product_id")
   quantity    Int
   observation String?
-  userId      String?   @map("user_id")
-  updatedAt   DateTime? @updatedAt @map("updated_at")
+  status      OrderItemStatus @default(PENDING)
+  userId      String?         @map("user_id")
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime?       @updatedAt @map("updated_at")
 
   order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product Product @relation(fields: [productId], references: [id])
   user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
-  @@id([orderId, productId])
   @@map("order_items")
 }
