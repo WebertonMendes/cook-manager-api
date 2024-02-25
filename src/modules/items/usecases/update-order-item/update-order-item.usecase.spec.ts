@@ -17,7 +17,7 @@ let inMemoryOrdersRepository: InMemoryOrdersRepository;
 let inMemoryOrderItemsRepository: InMemoryOrderItemsRepository;
 
 let refreshOrderPrice: RefreshOrderPriceUseCase;
-let updateOrderItemUseCase: UpdateOrderItemUseCase;
+let updateOrderItem: UpdateOrderItemUseCase;
 
 describe('Update Ordem Item', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('Update Ordem Item', () => {
       inMemoryProductsRepository,
     );
 
-    updateOrderItemUseCase = new UpdateOrderItemUseCase(
+    updateOrderItem = new UpdateOrderItemUseCase(
       inMemoryOrderItemsRepository,
       refreshOrderPrice,
     );
@@ -54,7 +54,7 @@ describe('Update Ordem Item', () => {
 
     expect(savedOrderItem.quantity).toEqual(1);
 
-    await updateOrderItemUseCase.execute(savedOrderItem.id, { quantity: 2 });
+    await updateOrderItem.execute(savedOrderItem.id, { quantity: 2 });
 
     expect(savedOrderItem.orderId).toEqual(order.id);
     expect(savedOrderItem.quantity).toEqual(2);
@@ -64,7 +64,7 @@ describe('Update Ordem Item', () => {
     const fakeOrderItemId = randomUUID();
 
     try {
-      await updateOrderItemUseCase.execute(fakeOrderItemId, { quantity: 2 });
+      await updateOrderItem.execute(fakeOrderItemId, { quantity: 2 });
     } catch (error) {
       expect(() => {
         throw new OrderItemNotFoundException(fakeOrderItemId);
