@@ -27,7 +27,8 @@ export class RefreshOrderPriceUseCase {
     });
 
     const updatePrice = await Promise.all(result);
-    const updatedPrice = updatePrice.pop();
+    const updatedPrice =
+      updatePrice.length > 0 ? updatePrice.pop() : totalPrice;
 
     await this.ordersRepository.update(orderId, { totalPrice: updatedPrice });
   }
