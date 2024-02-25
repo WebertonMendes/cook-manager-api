@@ -13,11 +13,13 @@ export class PrismaOrderItemsRepository implements OrderItemsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<OrderItemResponseDto> {
-    const order = await this.prisma.orderItems.findUnique({
+    const orderItem = await this.prisma.orderItems.findUnique({
       where: { id },
     });
 
-    return PrismaOrderItemsMapper.toDto([order])[0];
+    if (!orderItem) return null;
+
+    return PrismaOrderItemsMapper.toDto([orderItem])[0];
   }
 
   async findAllByOrderId(orderId: string): Promise<OrderItemResponseDto[]> {

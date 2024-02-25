@@ -6,18 +6,18 @@ import { randomUUID } from 'crypto';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { CategoryEntity } from '@/modules/categories/entities/category.entity';
 import { OrderItemsEntity } from '@/modules/items/entities/order-item.entity';
+import { OrderEntity } from '@/modules/orders/entities/order.entity';
 import { ProductEntity } from '@/modules/products/entities/product.entity';
 import { UserEntity } from '@/modules/users/entities/user.entity';
-import { OrderEntity } from '@/modules/orders/entities/order.entity';
 
 @Injectable()
-export class OrderItemFactory {
+export class OrderItemsFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaOrderItem(
+  async makePrismaOrderItems(
     data: Partial<OrderItemsEntity> = {},
   ): Promise<OrderItemsEntity> {
-    const makeData = await makeOrderItem(data);
+    const makeData = await makeOrderItems(data);
 
     await this.prisma.category.create({
       data: makeData.category,
@@ -43,7 +43,7 @@ export class OrderItemFactory {
   }
 }
 
-async function makeOrderItem(override: Partial<OrderItemsEntity> = {}) {
+async function makeOrderItems(override: Partial<OrderItemsEntity> = {}) {
   const category = new CategoryEntity({
     name: `${faker.commerce.department()}-${randomUUID()}`,
   });

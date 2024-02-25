@@ -7,24 +7,24 @@ import { beforeAll, describe, expect, test } from 'vitest';
 import { AppModule } from '@/infra/app.module';
 import { DatabaseModule } from '@/infra/database/database.module';
 import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { OrderItemFactory } from 'test/factories/make-order-items';
+import { OrderItemsFactory } from 'test/factories/make-order-items';
 import { OrderFactory } from 'test/factories/make-orders';
 
 describe('Delete order by ID (E2E)', () => {
   let app: INestApplication;
   let orderFactory: OrderFactory;
-  let orderItemFactory: OrderItemFactory;
+  let orderItemsFactory: OrderItemsFactory;
   let prisma: PrismaService;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [OrderFactory, OrderItemFactory],
+      providers: [OrderFactory, OrderItemsFactory],
     }).compile();
 
     app = moduleRef.createNestApplication();
     orderFactory = moduleRef.get(OrderFactory);
-    orderItemFactory = moduleRef.get(OrderItemFactory);
+    orderItemsFactory = moduleRef.get(OrderItemsFactory);
     prisma = moduleRef.get(PrismaService);
 
     await app.init();
@@ -58,7 +58,7 @@ describe('Delete order by ID (E2E)', () => {
   });
 
   test('[DELETE] /orders/:id throw OrderInProgressException', async () => {
-    const orderItem = await orderItemFactory.makePrismaOrderItem();
+    const orderItem = await orderItemsFactory.makePrismaOrderItems();
 
     const response = await request(app.getHttpServer())
       .delete(`/orders/${orderItem.orderId}`)
