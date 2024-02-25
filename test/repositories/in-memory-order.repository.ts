@@ -77,6 +77,7 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     const order = new OrderEntity({
       table: data.table,
       clientId: data.clientId,
+      userId: data.userId,
     });
 
     this.items.push(order);
