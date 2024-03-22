@@ -44,7 +44,7 @@ Linguagens/Ferramentas/Tecnologias utilizadas:
       <img align="center" alt="NodeJS" width="20" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg"> NodeJS
     </td>
     <td style="border-bottom-style: hidden;">
-      <img align="center" alt="NestJS" width="20" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nestjs/nestjs-plain.svg"> NestJS
+      <img align="center" alt="NestJS" width="20" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nestjs/nestjs-original.svg"> NestJS
     </td>
   </tr>
   <tr>
